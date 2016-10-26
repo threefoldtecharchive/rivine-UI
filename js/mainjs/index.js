@@ -7,13 +7,13 @@ import initWindow from './initWindow.js'
 global.config = loadConfig(Path.join(__dirname, '../config.json'))
 let mainWindow
 
-// When Electron loading has finished, start Sia-UI.
+// When Electron loading has finished, start Rivine-UI.
 app.on('ready', () => {
 	// Load mainWindow
 	mainWindow = initWindow(config)
 })
 
-// Allow only one instance of Sia-UI
+// Allow only one instance of Rivine-UI
 app.makeSingleInstance(() => {
 	mainWindow.restore()
 	mainWindow.focus()
@@ -25,7 +25,7 @@ app.on('window-all-closed', () => {
 })
 
 // On quit, save the config.
-// There's no need to call siad.stop here, since if siad was launched by the UI,
+// There's no need to call rivined.stop here, since if rivined was launched by the UI,
 // it will be a descendant of the UI in the process tree and will therefore be killed.
 app.on('quit', () => {
 	config.save()

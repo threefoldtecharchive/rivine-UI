@@ -6,10 +6,10 @@ import http from 'http'
 import url from 'url'
 import * as constants from '../constants/helper.js'
 
-export const checkSiaPath = () => new Promise((resolve, reject) => {
-	fs.stat(SiaAPI.config.attr('siac').path, (err) => {
+export const checkRivinePath = () => new Promise((resolve, reject) => {
+	fs.stat(RivineAPI.config.attr('rivinec').path, (err) => {
 		if (!err) {
-			if (Path.basename(SiaAPI.config.attr('siac').path).indexOf('siac') !== -1) {
+			if (Path.basename(RivineAPI.config.attr('rivinec').path).indexOf('rivinec') !== -1) {
 				resolve()
 			} else {
 				reject({ message: 'Invalid binary name.' })
@@ -20,38 +20,38 @@ export const checkSiaPath = () => new Promise((resolve, reject) => {
 	})
 })
 
-export const initPlugin = () => checkSiaPath().catch(() => {
-	//Look in the siad folder for siac.
-	SiaAPI.config.attr('siac', { path: Path.resolve( Path.dirname(SiaAPI.config.attr('siad').path), (process.platform === 'win32' ? './siac.exe' : './siac') ) })
-	checkSiaPath().catch(() => {
-		// config.path doesn't exist. Prompt the user for siac's location
-		if (!SiaAPI.config.attr('siac')) {
-			SiaAPI.config.attr('siac', { path: '' })
+export const initPlugin = () => checkRivinePath().catch(() => {
+	//Look in the rivined folder for rivinec.
+	RivineAPI.config.attr('rivinec', { path: Path.resolve( Path.dirname(RivineAPI.config.attr('rivined').path), (process.platform === 'win32' ? './rivinec.exe' : './rivinec') ) })
+	checkRivinePath().catch(() => {
+		// config.path doesn't exist. Prompt the user for rivinec's location
+		if (!RivineAPI.config.attr('rivinec')) {
+			RivineAPI.config.attr('rivinec', { path: '' })
 		}
-		SiaAPI.showError({ title: 'Siac not found', content: 'Sia-UI couldn\'t locate siac. Please navigate to siac.' })
-		const siacPath = SiaAPI.openFile({
-			title: 'Please locate siac.',
+		RivineAPI.showError({ title: 'Rivinec not found', content: 'Rivine-UI couldn\'t locate rivinec. Please navigate to rivinec.' })
+		const rivinecPath = RivineAPI.openFile({
+			title: 'Please locate rivinec.',
 			properties: ['openFile'],
-			defaultPath: Path.join('..', SiaAPI.config.attr('siac').path || './' ),
-			filters: [{ name: 'siac', extensions: ['*'] }],
+			defaultPath: Path.join('..', RivineAPI.config.attr('rivinec').path || './' ),
+			filters: [{ name: 'rivinec', extensions: ['*'] }],
 		})
-		if (siacPath) {
-			if (Path.basename(siacPath[0]).indexOf('siac') === -1) {
-				SiaAPI.showError({ title: 'Invalid Binary Name', content: 'The siac binary must be called siac. Restart the plugin to choose a valid binary.' })
+		if (rivinecPath) {
+			if (Path.basename(rivinecPath[0]).indexOf('rivinec') === -1) {
+				RivineAPI.showError({ title: 'Invalid Binary Name', content: 'The rivinec binary must be called rivinec. Restart the plugin to choose a valid binary.' })
 			} else {
-				SiaAPI.config.attr('siac', { path: siacPath[0] })
+				RivineAPI.config.attr('rivinec', { path: rivinecPath[0] })
 			}
 		} else {
-			SiaAPI.showError({ title: 'Siac not found', content: 'This plugin will be unusable until a proper siac binary is found.' })
+			RivineAPI.showError({ title: 'Rivinec not found', content: 'This plugin will be unusable until a proper rivinec binary is found.' })
 		}
 	})
-	SiaAPI.config.save()
+	RivineAPI.config.save()
 })
 
 export const commandType = function(commandString, specialArray) {
 	//Cleans string and sees if any subarray in array starts with the string when split.
 	const args = commandString.replace(/\s*\s/g, ' ').trim().split(' ')
-	if (args[0] === './siac' || args[0] === 'siac') {
+	if (args[0] === './rivinec' || args[0] === 'rivinec') {
 		args.shift()
 	}
 
@@ -65,11 +65,11 @@ export const commandType = function(commandString, specialArray) {
 }
 
 export const getArgumentString = function(commandString, rawCommandSplit) {
-	//Parses out ./siac, siac, command, and address flags leaving only arguments.
+	//Parses out ./rivinec, rivinec, command, and address flags leaving only arguments.
 
-	//Remove leading ./siac or siac
+	//Remove leading ./rivinec or rivinec
 	const args = commandString.replace(/\s*\s/g, ' ').trim().split(' ')
-	if (args[0] === './siac' || args[0] === 'siac') {
+	if (args[0] === './rivinec' || args[0] === 'rivinec') {
 		args.shift()
 	}
 
@@ -102,28 +102,28 @@ export const spawnCommand = function(commandStr, actions, newid) {
 	const newCommand = Map({ command: commandString, result: '', id: newid, stat: 'running' })
 	actions.addCommand(newCommand)
 
-	//Remove surrounding whitespace and leading siac command.
-	if (commandString.startsWith('siac')) {
+	//Remove surrounding whitespace and leading rivinec command.
+	if (commandString.startsWith('rivinec')) {
 		commandString = commandString.slice(4).trim()
-	} else if (commandString.startsWith('./siac')) {
+	} else if (commandString.startsWith('./rivinec')) {
 		commandString = commandString.slice(6).trim()
 	}
 
-	//Add address flag to siac.
+	//Add address flag to rivinec.
 	let args = commandString.split(' ')
-	if (args.indexOf('-a') === -1 && args.indexOf('--address') === -1 && SiaAPI.config.attr('address')) {
-		args = args.concat([ '-a', SiaAPI.config.attr('address') ])
+	if (args.indexOf('-a') === -1 && args.indexOf('--address') === -1 && RivineAPI.config.attr('address')) {
+		args = args.concat([ '-a', RivineAPI.config.attr('address') ])
 	}
 
-	const siac = child_process.spawn('./siac', args, { cwd: Path.dirname(SiaAPI.config.attr('siac').path || '') })
+	const rivinec = child_process.spawn('./rivinec', args, { cwd: Path.dirname(RivineAPI.config.attr('rivinec').path || '') })
 
 	//Update the UI when the process receives new ouput.
 	const consumeChunk = function(chunk) {
 		const chunkTrimmed = chunk.toString().replace(/stty: stdin isn't a terminal\n/g, '')
 		actions.updateCommand(newCommand.get('command'), newCommand.get('id'), chunkTrimmed)
 	}
-	siac.stdout.on('data', consumeChunk)
-	siac.stderr.on('data', consumeChunk)
+	rivinec.stdout.on('data', consumeChunk)
+	rivinec.stderr.on('data', consumeChunk)
 
 	let closed = false
 	const streamClosed = function() {
@@ -133,11 +133,11 @@ export const spawnCommand = function(commandStr, actions, newid) {
 		}
 	}
 
-	siac.on('error', (e) => {
-		consumeChunk(`Error running command: ${e.message}.\nIs your siac path correct?`)
+	rivinec.on('error', (e) => {
+		consumeChunk(`Error running command: ${e.message}.\nIs your rivinec path correct?`)
 		streamClosed()
 	})
-	siac.on('close', () => {
+	rivinec.on('close', () => {
 		streamClosed()
 	})
 
@@ -146,30 +146,30 @@ export const spawnCommand = function(commandStr, actions, newid) {
 		actions.hideCommandOverview()
 	}
 
-	return siac
+	return rivinec
 }
 
 export const httpCommand = function(commandStr, actions, newid) {
 	let commandString = commandStr
 	const originalCommand = commandStr.replace(/\s*\s/g, ' ').trim()
 
-	//Remove surrounding whitespace and leading siac command.
-	if (commandString.startsWith('siac')) {
+	//Remove surrounding whitespace and leading rivinec command.
+	if (commandString.startsWith('rivinec')) {
 		commandString = commandString.slice(4).trim()
-	} else if (commandString.startsWith('./siac')) {
+	} else if (commandString.startsWith('./rivinec')) {
 		commandString = commandString.slice(6).trim()
 	}
 
 	//Parse arguments.
 	const args = commandString.split(' ')
 
-	//Add address flag to siac.
-	let siaAddr = url.parse('http://localhost:9980')
+	//Add address flag to rivinec.
+	let rivineAddr = url.parse('http://localhost:9980')
 
 	if (args.indexOf('-a') === -1 && args.indexOf('--address') === -1) {
-		if (SiaAPI.config.attr('address')) {
+		if (RivineAPI.config.attr('address')) {
 			//Load default address.
-			siaAddr = url.parse('http://' + SiaAPI.config.attr('address'))
+			rivineAddr = url.parse('http://' + RivineAPI.config.attr('address'))
 		}
 	} else {
 		//Parse address flag.
@@ -179,7 +179,7 @@ export const httpCommand = function(commandStr, actions, newid) {
 
 		}
 		if (index < args.length-1) {
-			siaAddr = url.parse('http://' + args[index+1])
+			rivineAddr = url.parse('http://' + args[index+1])
 		}
 		args.splice(index, 2)
 		commandString = args.join(' ')
@@ -192,8 +192,8 @@ export const httpCommand = function(commandStr, actions, newid) {
 		apiURL = '/wallet/seed'
 	} else if (commandString.includes('wallet load 033x', 0)) {
 		apiURL = '/wallet/033x'
-	} else if (commandString.includes('wallet load siag', 0)) {
-		apiURL = '/wallet/siagkey'
+	} else if (commandString.includes('wallet load rivineg', 0)) {
+		apiURL = '/wallet/rivinegkey'
 	} else {
 		return spawnCommand(commandString, actions).stdin
 	}
@@ -231,12 +231,12 @@ export const httpCommand = function(commandStr, actions, newid) {
 	}
 
 	const options = {
-		hostname: siaAddr.hostname,
-		port: siaAddr.port,
+		hostname: rivineAddr.hostname,
+		port: rivineAddr.port,
 		path: apiURL,
 		method: 'POST',
 		headers: {
-			'User-Agent': 'Sia-Agent',
+			'User-Agent': 'Rivine-Agent',
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	}
@@ -264,7 +264,7 @@ export const commandInputHelper = function(e, actions, currentCommand, showComma
 
 		case constants.WALLET_UNLOCK: //wallet unlock
 		case constants.WALLET_033X: //wallet load 033x
-		case constants.WALLET_SIAG: //wallet load siag
+		case constants.WALLET_rivineG: //wallet load rivineg
 		case constants.WALLET_SEED: //wallet load seed
 			actions.showWalletPrompt()
 			break
@@ -302,4 +302,3 @@ export const commandInputHelper = function(e, actions, currentCommand, showComma
 		}, 0)
 	}
 }
-

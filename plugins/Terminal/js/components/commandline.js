@@ -25,12 +25,8 @@ const CommandLine = ({showCommandOverview, actions}) => {
 						<p>
 							consensus   Print the current state of consensus<br />
 							gateway     Perform gateway actions<br />
-							host        Perform host actions<br />
-							hostdb      View or modify the host database<br />
-							miner       Perform miner actions<br />
-							renter      Perform renter actions<br />
-							stop        Stop the Sia daemon<br />
-							update      Update Sia<br />
+							stop        Stop the Rivine daemon<br />
+							update      Update Rivine<br />
 							version     Print version information<br />
 							wallet      Perform wallet actions<br /><br />
 

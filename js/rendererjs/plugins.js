@@ -1,4 +1,4 @@
-// This module handles the construction of Sia-UI plugins.
+// This module handles the construction of Rivine-UI plugins.
 import { List } from 'immutable'
 import Path from 'path'
 import fs from 'fs'
@@ -23,7 +23,7 @@ const createButtonTextElement = (name) => {
 }
 
 // Construct a plugin view element from a plugin path and title
-// use webview.preload to inject SiaAPI into the plugin's global namespace.
+// use webview.preload to inject RivineAPI into the plugin's global namespace.
 const createPluginElement = (markupPath, title) => {
 	const elem = document.createElement('webview')
 	elem.id = title + '-view'
@@ -148,4 +148,3 @@ export const getOrderedPlugins = (path, homePlugin) => {
 
 	return plugins
 }
-

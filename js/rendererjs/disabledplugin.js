@@ -10,15 +10,15 @@ const containerStyle = {
 	height: '100%',
 }
 
-const DisabledPlugin = ({startSiad}) => (
+const DisabledPlugin = ({startRivined}) => (
 	<div style={containerStyle}>
-		<h1>Siad has stopped.</h1>
-		<button onClick={startSiad}>Start Siad</button>
+		<h1>Rivined has stopped.</h1>
+		<button onClick={startRivined}>Start Rivined</button>
 	</div>
 )
 
 DisabledPlugin.propTypes = {
-	startSiad: PropTypes.func.isRequired,
+	startRivined: PropTypes.func.isRequired,
 }
 
 export default DisabledPlugin

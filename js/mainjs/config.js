@@ -5,11 +5,12 @@ import { app } from 'electron'
 // The default settings
 const defaultConfig = {
 	homePlugin:  'Overview',
-	siad: {
-		path: Path.join(__dirname, '../Sia/' + (process.platform === 'win32' ? 'siad.exe' : 'siad')),
-		datadir: Path.join(app.getPath('userData'), './sia'),
+	rivined: {
+		path: Path.join(__dirname, '../Rivine/' + (process.platform === 'win32' ? 'rivined.exe' : 'rivined')),
+		datadir: Path.join(app.getPath('userData'), './rivine'),
 		detached: false,
-		address: 'localhost:9980',
+		//address: 'localhost:9980',
+		address: 'localhost:23110',
 	},
 	closeToTray: process.platform === 'win32' || process.platform === 'darwin' ? true : false,
 	width:	   1024,
@@ -68,4 +69,3 @@ export default function configManager(filepath) {
 	// Return the config object with the above 3 member functions
 	return config
 }
-

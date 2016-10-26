@@ -1,13 +1,13 @@
-// pluginapi.js: Sia-UI plugin API interface exposed to all plugins.
+// pluginapi.js: Rivine-UI plugin API interface exposed to all plugins.
 // This is injected into every plugin's global namespace.
-import * as Siad from 'sia.js'
+import * as Rivined from '../mainjs/rivine.js'
 import { remote } from 'electron'
 import React from 'react'
 import DisabledPlugin from './disabledplugin.js'
 const dialog = remote.dialog
 const mainWindow = remote.getCurrentWindow()
 const config = remote.getGlobal('config')
-const siadConfig = config.siad
+const rivinedConfig = config.rivined
 let disabled = false
 
 const sleep = (ms = 0) => new Promise((r) => setTimeout(r, ms))
@@ -21,39 +21,39 @@ window.onload = async function() {
 	const ReactDOM = require('react-dom')
 	/* eslint-enable global-require */
 
-	const startSiad = () => {
-		Siad.launch(siadConfig.path, {
-			'sia-directory': siadConfig.datadir,
+	const startRivined = () => {
+		Rivined.launch(rivinedConfig.path, {
+			'rivine-directory': rivinedConfig.datadir,
 		})
 	}
-	// Continuously check (every 2000ms) if siad is running.
-	// If siad is not running, disable the plugin by mounting
+	// Continuously check (every 2000ms) if rivined is running.
+	// If rivined is not running, disable the plugin by mounting
 	// the `DisabledPlugin` component in the DOM's body.
-	// If siad is running and the plugin has been disabled,
+	// If rivined is running and the plugin has been disabled,
 	// reload the plugin.
 	while (true) {
-		const running = await Siad.isRunning(siadConfig.address)
+		const running = await Rivined.isRunning(rivinedConfig.address)
 		if (running && disabled) {
 			disabled = false
 			window.location.reload()
 		}
 		if (!running && !disabled) {
 			disabled = true
-			ReactDOM.render(<DisabledPlugin startSiad={startSiad} />, document.body)
+			ReactDOM.render(<DisabledPlugin startRivined={startRivined} />, document.body)
 		}
 		await sleep(2000)
 	}
 }
 
 
-window.SiaAPI = {
+window.RivineAPI = {
 	call: async function(url, callback) {
-		const running = await Siad.isRunning(siadConfig.address)
+		const running = await Rivined.isRunning(rivinedConfig.address)
 		if (running) {
 			let results
 			let error
 			try {
-				results = await Siad.call(siadConfig.address, url)
+				results = await Rivined.call(rivinedConfig.address, url)
 			} catch (e) {
 				error = e
 			}
@@ -61,8 +61,8 @@ window.SiaAPI = {
 		}
 	},
 	config: config,
-	hastingsToSiacoins: Siad.hastingsToSiacoins,
-	siacoinsToHastings: Siad.siacoinsToHastings,
+	hastingsToRivinecoins: Rivined.hastingsToRivinecoins,
+	rivinecoinsToHastings: Rivined.rivinecoinsToHastings,
 	openFile: (options) => dialog.showOpenDialog(mainWindow, options),
 	saveFile: (options) => dialog.showSaveDialog(mainWindow, options),
 	showMessage: (options) => dialog.showMessageBox(mainWindow, options),

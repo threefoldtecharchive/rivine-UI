@@ -1,20 +1,20 @@
 import { Menu } from 'electron'
 
 export default function(window) {
-	// Template for Sia-UI tray menu.
+	// Template for Rivine-UI tray menu.
 	const menutemplate = [
 		{
-			label: 'Show Sia',
+			label: 'Show Rivine',
 			click: () => window.show(),
 		},
 		{ type: 'separator' },
 		{
-			label: 'Hide Sia',
+			label: 'Hide Rivine',
 			click: () => window.hide(),
 		},
 		{ type: 'separator' },
 		{
-			label: 'Quit Sia',
+			label: 'Quit Rivine',
 			click: () => {
 				window.webContents.send('quit')
 			},

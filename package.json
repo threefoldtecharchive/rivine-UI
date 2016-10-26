@@ -1,9 +1,9 @@
 {
-  "name": "Sia-UI",
-  "version": "v1.0.2",
+  "name": "Rivine-UI",
+  "version": "v0.0.1",
   "main": "dist/main.js",
   "author": "NebulousLabs",
-  "description": "A UI application for interfacing with Sia",
+  "description": "A UI application for interfacing with Rivine",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.16.0",
@@ -43,7 +43,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-saga": "^0.11.0",
-    "sia.js": "^0.3.0",
+
     "webpack": "^1.13.1"
   },
   "scripts": {
@@ -51,7 +51,7 @@
     "debug": "webpack -d && electron .",
     "build": "webpack",
     "watch": "webpack --watch",
-    "clean": "rm -rf release doc/Sia-UI node_modules Sia config.json **/*.swp npm-debug.log",
+    "clean": "rm -rf release doc/Rivine-UI node_modules Rivine config.json **/*.swp npm-debug.log",
     "fresh": "npm run clean && npm install && npm start",
     "test-args": "mocha --require test/dom.setup.js --compilers js:babel-register --recursive ./test",
     "test": "npm run lint && npm run build && npm run test-args",
@@ -60,9 +60,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/NebulousLabs/Sia-UI.git"
+    "url": "git://github.com/rivine/Rivine-UI.git"
   },
   "bugs": {
-    "url": "https://github.com/NebulousLabs/Sia-UI/issues"
+    "url": "https://github.com/rivine/Rivine-UI/issues"
   }
 }

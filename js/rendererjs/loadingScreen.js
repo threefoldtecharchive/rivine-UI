@@ -1,8 +1,8 @@
-// loadingScreen.js: display a loading screen until communication with Siad has been established.
+// loadingScreen.js: display a loading screen until communication with Rivined has been established.
 // if an available daemon is not running on the host,
-// launch an instance of siad using config.js.
+// launch an instance of rivined using config.js.
 import { remote } from 'electron'
-import * as Siad from 'sia.js'
+import * as Rivined from '../mainjs/rivine.js'
 import Path from 'path'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -12,26 +12,26 @@ const dialog = remote.dialog
 const app = remote.app
 const fs = remote.require('fs')
 const config = remote.getGlobal('config')
-const siadConfig = config.attr('siad')
+const rivinedConfig = config.attr('rivined')
 
 const overlay = document.getElementsByClassName('overlay')[0]
 const overlayText = overlay.getElementsByClassName('centered')[0].getElementsByTagName('p')[0]
-overlayText.textContent = 'Loading Sia...'
+overlayText.textContent = 'Loading Rivine...'
 
 const showError = (error) => {
-	overlayText.textContent = 'A Sia-UI error has occured: ' + error
+	overlayText.textContent = 'A Rivine-UI error has occured: ' + error
 }
 
-// startUI starts a Sia UI instance using the given welcome message.
+// startUI starts a Rivine UI instance using the given welcome message.
 // calls initUI() after displaying a welcome message.
 const startUI = (welcomeMsg, initUI) => {
 	// Display a welcome message, then initialize the ui
 	overlayText.innerHTML = welcomeMsg
 
-	// Construct the status bar component and poll for updates from Siad
+	// Construct the status bar component and poll for updates from Rivined
 	const updateSyncStatus = async function() {
-		const consensusData = await Siad.call(siadConfig.address, '/consensus')
-		const gatewayData = await Siad.call(siadConfig.address, '/gateway')
+		const consensusData = await Rivined.call(rivinedConfig.address, '/consensus')
+		const gatewayData = await Rivined.call(rivinedConfig.address, '/gateway')
 		ReactDOM.render(<StatusBar peers={gatewayData.peers.length} synced={consensusData.synced} blockheight={consensusData.height} />, document.getElementById('statusbar'))
 	}
 
@@ -43,11 +43,11 @@ const startUI = (welcomeMsg, initUI) => {
 	})
 }
 
-// checkSiaPath validates config's Sia path.
-// returns a promise that is resolved with `true` if siadConfig.path exists
+// checkRivinePath validates config's Rivine path.
+// returns a promise that is resolved with `true` if rivinedConfig.path exists
 // or `false` if it does not exist.
-const checkSiaPath = () => new Promise((resolve) => {
-	fs.stat(siadConfig.path, (err) => {
+const checkRivinePath = () => new Promise((resolve) => {
+	fs.stat(rivinedConfig.path, (err) => {
 		if (!err) {
 			resolve(true)
 		} else {
@@ -56,62 +56,62 @@ const checkSiaPath = () => new Promise((resolve) => {
 	})
 })
 
-// Check if Siad is already running on this host.
+// Check if Rivined is already running on this host.
 // If it is, start the UI and display a welcome message to the user.
-// Otherwise, start a new instance of Siad using config.js.
+// Otherwise, start a new instance of Rivined using config.js.
 export default async function loadingScreen(initUI) {
-	// Create the Sia data directory if it does not exist
+	// Create the Rivine data directory if it does not exist
 	try {
-		fs.statSync(siadConfig.datadir)
+		fs.statSync(rivinedConfig.datadir)
 	} catch (e) {
-		fs.mkdirSync(siadConfig.datadir)
+		fs.mkdirSync(rivinedConfig.datadir)
 	}
-	// If Sia is already running, start the UI with a 'Welcome Back' message.
-	const running = await Siad.isRunning(siadConfig.address)
+	// If Rivine is already running, start the UI with a 'Welcome Back' message.
+	const running = await Rivined.isRunning(rivinedConfig.address)
 	if (running) {
 		startUI('Welcome back', initUI)
 		return
 	}
 
-	// Check siadConfig.path, and ask for a new path if siad doesn't exist.
-	const exists = await checkSiaPath(siadConfig.path)
+	// Check rivinedConfig.path, and ask for a new path if rivined doesn't exist.
+	const exists = await checkRivinePath(rivinedConfig.path)
 	if (!exists) {
-		// config.path doesn't exist.  Prompt the user for siad's location
-		dialog.showErrorBox('Siad not found', 'Sia-UI couldn\'t locate siad.  Please navigate to siad.')
-		const siadPath = dialog.showOpenDialog({
-			title: 'Please locate siad.',
+		// config.path doesn't exist.  Prompt the user for rivined's location
+		dialog.showErrorBox('Rivined not found', 'Rivine-UI couldn\'t locate rivined.  Please navigate to rivined.')
+		const rivinedPath = dialog.showOpenDialog({
+			title: 'Please locate rivined.',
 			properties: ['openFile'],
-			defaultPath: Path.join('..', siadConfig.path),
-			filters: [{ name: 'siad', extensions: ['*'] }],
+			defaultPath: Path.join('..', rivinedConfig.path),
+			filters: [{ name: 'rivined', extensions: ['*'] }],
 		})
-		if (typeof siadPath === 'undefined') {
-			// The user didn't choose siad, we should just close.
+		if (typeof rivinedPath === 'undefined') {
+			// The user didn't choose rivined, we should just close.
 			app.quit()
 		}
-		siadConfig.path = siadPath[0]
+		rivinedConfig.path = rivinedPath[0]
 	}
-	// Launch the new Siad process
+	// Launch the new Rivined process
 	try {
-		const siadProcess = Siad.launch(siadConfig.path, {
-			'sia-directory': siadConfig.datadir,
+		const rivinedProcess = Rivined.launch(rivinedConfig.path, {
+			'rivine-directory': rivinedConfig.datadir,
 		})
-		siadProcess.on('error', (e) => showError('Siad couldnt start: ' + e.toString()))
-		siadProcess.on('close', () => showError('Siad unexpectedly closed.'))
-		siadProcess.on('exit', () => showError('Siad unexpectedly exited.'))
-		window.siadProcess = siadProcess
+		rivinedProcess.on('error', (e) => showError('Rivined couldnt start: ' + e.toString()))
+		rivinedProcess.on('close', () => showError('Rivined unexpectedly closed.'))
+		rivinedProcess.on('exit', () => showError('Rivined unexpectedly exited.'))
+		window.rivinedProcess = rivinedProcess
 	} catch (e) {
 		showError(e.toString())
 		return
 	}
 	// Wait for this process to become reachable before starting the UI.
 	const sleep = (ms = 0) => new Promise((r) => setTimeout(r, ms))
-	while (await Siad.isRunning(siadConfig.address) === false) {
+	while (await Rivined.isRunning(rivinedConfig.address) === false) {
 		await sleep(500)
 	}
 	// Unregister callbacks
-	window.siadProcess.removeAllListeners('error')
-	window.siadProcess.removeAllListeners('exit')
-	window.siadProcess.removeAllListeners('close')
+	window.rivinedProcess.removeAllListeners('error')
+	window.rivinedProcess.removeAllListeners('exit')
+	window.rivinedProcess.removeAllListeners('close')
 
-	startUI('Welcome to Sia', initUI)
+	startUI('Welcome to Rivine', initUI)
 }
