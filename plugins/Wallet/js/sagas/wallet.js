@@ -1,15 +1,15 @@
 import { takeEvery } from 'redux-saga'
 import { put, take } from 'redux-saga/effects'
-import { siadCall, parseRawTransactions } from './helpers.js'
+import { rivinedCall, parseRawTransactions } from './helpers.js'
 import * as actions from '../actions/wallet.js'
 import * as constants from '../constants/wallet.js'
 import { walletUnlockError } from '../actions/error.js'
 
 // Send an error notification.
 const sendError = (e) => {
-	SiaAPI.showError({
-		title: 'Sia-UI Wallet Error',
-		content: e.message,
+	RivineAPI.showError({
+		title: 'Rivine-UI Wallet Error',
+		content: e.stack,
 	})
 }
 
@@ -21,7 +21,7 @@ const sendError = (e) => {
 //  Call /wallet and dispatch the appropriate actions from the returned JSON.
 function *getLockStatusSaga() {
 	try {
-		const response = yield siadCall('/wallet')
+		const response = yield rivinedCall('/wallet')
 		if (!response.unlocked) {
 			yield put(actions.setLocked())
 		} else {
@@ -38,11 +38,11 @@ function *getLockStatusSaga() {
 }
 
 // Call /wallet/unlock and dispatch setEncrypted and setUnlocked.
-// Since siadCall is a promise which rejects on error, API errors will be caught.
+// Since rivinedCall is a promise which rejects on error, API errors will be caught.
 // Dispatch any API errors as a walletUnlockError action.
 function *walletUnlockSaga(action) {
 	try {
-		yield siadCall({
+		yield rivinedCall({
 			url: '/wallet/unlock',
 			method: 'POST',
 			qs: {
@@ -60,7 +60,7 @@ function *walletUnlockSaga(action) {
 
 function *walletLockSaga() {
 	try {
-		yield siadCall({
+		yield rivinedCall({
 			url: '/wallet/lock',
 			method: 'POST',
 		})
@@ -75,7 +75,7 @@ function *walletLockSaga() {
 // Wait for the user to close the dialog, then unlock the wallet using the primary seed.
 function *createWalletSaga() {
 	try {
-		const response = yield siadCall({
+		const response = yield rivinedCall({
 			url: '/wallet/init',
 			method: 'POST',
 			qs: {
@@ -93,12 +93,12 @@ function *createWalletSaga() {
 // call /wallet and compute the confirmed balance as well as the unconfirmed delta.
 function *getBalanceSaga() {
 	try {
-		const response = yield siadCall('/wallet')
-		const confirmed = SiaAPI.hastingsToSiacoins(response.confirmedsiacoinbalance)
-		const unconfirmedIncoming = SiaAPI.hastingsToSiacoins(response.unconfirmedincomingsiacoins)
-		const unconfirmedOutgoing = SiaAPI.hastingsToSiacoins(response.unconfirmedoutgoingsiacoins)
+		const response = yield rivinedCall('/wallet')
+		const confirmed = RivineAPI.hastingsToCoins(response.confirmedcoinbalance)
+		const unconfirmedIncoming = RivineAPI.hastingsToCoins(response.unconfirmedincomingcoins)
+		const unconfirmedOutgoing = RivineAPI.hastingsToCoins(response.unconfirmedoutgoingcoins)
 		const unconfirmed = unconfirmedIncoming.minus(unconfirmedOutgoing)
-		yield put(actions.setBalance(confirmed.round(2).toString(), unconfirmed.round(2).toString(), response.siafundbalance))
+		yield put(actions.setBalance(confirmed.round(2).toString(), unconfirmed.round(2).toString(), response.blockstakebalance))
 	} catch (e) {
 		yield sendError(e)
 	}
@@ -107,7 +107,7 @@ function *getBalanceSaga() {
 // Get all the transactions from /wallet transactions, parse them, and dispatch setTransactions()
 function *getTransactionsSaga() {
 	try {
-		const response = yield siadCall('/wallet/transactions?startheight=0&endheight=-1')
+		const response = yield rivinedCall('/wallet/transactions?startheight=0&endheight=-1')
 		const transactions = parseRawTransactions(response)
 		yield put(actions.setTransactions(transactions))
 	} catch (e) {
@@ -117,7 +117,7 @@ function *getTransactionsSaga() {
 // Call /wallet/address, set the receive address, and show the receive prompt.
 function *getNewReceiveAddressSaga() {
 	try {
-		const response = yield siadCall('/wallet/address')
+		const response = yield rivinedCall('/wallet/address')
 		yield put(actions.setReceiveAddress(response.address))
 		yield put(actions.showReceivePrompt())
 	} catch (e) {
@@ -128,13 +128,13 @@ function *getNewReceiveAddressSaga() {
 function *sendCurrencySaga(action) {
 	try {
 		if (action.currencytype === undefined || action.amount === undefined || action.destination === undefined || action.amount === '' || action.currencytype === '' || action.destination === '') {
-			throw { message: 'You must specify an amount and a destination to send Siacoin!' }
+			throw { message: 'You must specify an amount and a destination to send Coins!' }
 		}
-		if (action.currencytype !== 'siafunds' && action.currencytype !== 'siacoins') {
+		if (action.currencytype !== 'blockstakes' && action.currencytype !== 'coins') {
 			throw { message: 'Invalid currency type!' }
 		}
-		const sendAmount = action.currencytype === 'siacoins' ? SiaAPI.siacoinsToHastings(action.amount).toString() : action.amount
-		yield siadCall({
+		const sendAmount = action.currencytype === 'coins' ? RivineAPI.coinsToHastings(action.amount).toString() : action.amount
+		yield rivinedCall({
 			url: '/wallet/' + action.currencytype,
 			method: 'POST',
 			qs: {

@@ -123,12 +123,12 @@ var errCouldNotConnect = exports.errCouldNotConnect = new Error('could not conne
 _bignumber2.default.config({ EXPONENTIAL_AT: 1e+9 });
 _bignumber2.default.config({ DECIMAL_PLACES: 30 });
 
-var hastingsPerRivinecoin = new _bignumber2.default('10').toPower(24);
-var rivinecoinsToHastings = function rivinecoinsToHastings(rivinecoins) {
-	return new _bignumber2.default(rivinecoins).times(hastingsPerRivinecoin);
+var hastingsPerCoin = new _bignumber2.default('10').toPower(24);
+var coinsToHastings = function coinsToHastings(rivinecoins) {
+	return new _bignumber2.default(rivinecoins).times(hastingsPerCoin);
 };
-var hastingsToRivinecoins = function hastingsToRivinecoins(hastings) {
-	return new _bignumber2.default(hastings).dividedBy(hastingsPerRivinecoin);
+var hastingsToCoins = function hastingsToCoins(hastings) {
+	return new _bignumber2.default(hastings).dividedBy(hastingsPerCoin);
 };
 
 // Call makes a call to the Rivine API at `address`, with the request options defined by `opts`.
@@ -210,5 +210,5 @@ var launch = function launch(path,  settings) {
 exports.launch = launch;
 exports.isRunning = _isRunning;
 exports.call = _call;
-exports.rivinecoinsToHastings = rivinecoinsToHastings;
-exports.hastingsToRivinecoins = hastingsToRivinecoins;
+exports.coinsToHastings = coinsToHastings;
+exports.hastingsToCoins = hastingsToCoins;

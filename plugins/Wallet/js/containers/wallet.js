@@ -6,7 +6,7 @@ import { startSendPrompt } from '../actions/wallet.js'
 const mapStateToProps = (state) => ({
 	confirmedbalance: state.wallet.get('confirmedbalance'),
 	unconfirmedbalance: state.wallet.get('unconfirmedbalance'),
-	siafundbalance: state.wallet.get('siafundbalance'),
+	rivinefundbalance: state.wallet.get('rivinefundbalance'),
 	showReceivePrompt: state.wallet.get('showReceivePrompt'),
 	showSendPrompt: state.wallet.get('showSendPrompt'),
 	showNewWalletDialog: state.wallet.get('showNewWalletDialog'),

@@ -20,7 +20,7 @@ export const initWallet = () => {
 	store.dispatch(getBalance())
 	store.dispatch(getTransactions())
 
-	// Poll Siad for state changes.
+	// Poll Rivined for state changes.
 	setInterval(() => {
 		store.dispatch(getLockStatus())
 		store.dispatch(getBalance())
@@ -32,4 +32,3 @@ export const initWallet = () => {
 		</Provider>
 	)
 }
-

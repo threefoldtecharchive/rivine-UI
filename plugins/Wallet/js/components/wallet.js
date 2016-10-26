@@ -7,19 +7,19 @@ import ReceivePrompt from '../containers/receiveprompt.js'
 import NewWalletDialog from '../containers/newwalletdialog.js'
 import LockButton from '../containers/lockbutton.js'
 
-const Wallet = ({confirmedbalance, unconfirmedbalance, siafundbalance, showReceivePrompt, showSendPrompt, showNewWalletDialog, actions }) => {
+const Wallet = ({confirmedbalance, unconfirmedbalance, blockstakebalance, showReceivePrompt, showSendPrompt, showNewWalletDialog, actions }) => {
 	const onSendClick = (currencytype) => () => actions.startSendPrompt(currencytype)
 	return (
 		<div className="wallet">
 			<div className="wallet-toolbar">
 				<div className="balance-info">
-					<span>Confirmed Balance: {confirmedbalance} SC </span>
-					<span>Unconfirmed Delta: {unconfirmedbalance} SC </span>
-					{siafundbalance !== '0' ? (<span> Siafund Balance: {siafundbalance} SF </span>) : null}
+					<span>Confirmed Balance: {confirmedbalance} C </span>
+					<span>Unconfirmed Delta: {unconfirmedbalance} C </span>
+					{blockstakebalance !== '0' ? (<span> Blockstake Balance: {blockstakebalance} BS </span>) : null}
 				</div>
 				<LockButton />
-				{siafundbalance !== '0' ? <SendButton currencytype="Siafund" onClick={onSendClick('siafunds')} />: null}
-				<SendButton currencytype="Siacoin" onClick={onSendClick('siacoins')} />
+				{blockstakebalance !== '0' ? <SendButton currencytype="Blockstakes" onClick={onSendClick('blockstakes')} />: null}
+				<SendButton currencytype="Coins" onClick={onSendClick('coins')} />
 				<ReceiveButton />
 			</div>
 			{showNewWalletDialog ? <NewWalletDialog /> : null}
@@ -33,7 +33,7 @@ const Wallet = ({confirmedbalance, unconfirmedbalance, siafundbalance, showRecei
 Wallet.propTypes = {
 	confirmedbalance: PropTypes.string.isRequired,
 	unconfirmedbalance: PropTypes.string.isRequired,
-	siafundbalance: PropTypes.string.isRequired,
+	blockstakebalance: PropTypes.string.isRequired,
 	showNewWalletDialog: PropTypes.bool,
 	showSendPrompt: PropTypes.bool,
 	showReceivePrompt: PropTypes.bool,

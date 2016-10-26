@@ -61,8 +61,8 @@ window.RivineAPI = {
 		}
 	},
 	config: config,
-	hastingsToRivinecoins: Rivined.hastingsToRivinecoins,
-	rivinecoinsToHastings: Rivined.rivinecoinsToHastings,
+	hastingsToCoins: Rivined.hastingsToCoins,
+	coinsToHastings: Rivined.coinsToHastings,
 	openFile: (options) => dialog.showOpenDialog(mainWindow, options),
 	saveFile: (options) => dialog.showSaveDialog(mainWindow, options),
 	showMessage: (options) => dialog.showMessageBox(mainWindow, options),
