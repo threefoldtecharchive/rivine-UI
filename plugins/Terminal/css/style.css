@@ -1,6 +1,6 @@
-/*  Style Guide: 
+/*  Style Guide:
  *	Transparent: 70% Opacity
- *	
+ *
  *	White:	  #FFFFFF
  *	Grey-White: #F5F5F5
  *	Faint-Grey: #ECECEC
@@ -37,7 +37,7 @@
 }
 .overview .command-history-list {
 	/* When overview is opened make this the size of the screen minus footer minus size of overview pane. */
-	max-height: calc( 100% - 2.4em - 9px - (438px - 2.8em - 2px) );
+	max-height: calc( 100% - 2.4em - 9px - (300px - 2.8em - 2px) );
 	transition: all .5s .25s;
 }
 
@@ -79,7 +79,7 @@ footer {
 	display: block;
 	border: 1px;
 	padding: 0px 4em;
-	height: calc( 438px - 2.8em - 2px ); /* 438px is the size of the command section using the default window size of 800x600px */
+	height: calc( 300px - 2.8em - 2px ); /* 438px is the size of the command section using the default window size of 800x600px */
 	width: calc( 100% - 8em );
 	margin-top: 0px;
 	white-space: pre-wrap;
@@ -87,7 +87,7 @@ footer {
 	transition: all .5s;
 }
 .command-overview.expanded {
-	max-height: calc( 438px - 2.8em - 2px );
+	max-height: calc( 300px - 2.8em - 2px );
 	transition: all .5s .25s;
 }
 
