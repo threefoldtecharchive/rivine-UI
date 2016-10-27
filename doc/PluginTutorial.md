@@ -6,7 +6,7 @@ use.
 
 ## It's a webpage... it's that simple.
 
-Plugins are loaded into Sia-UI on run-time through an electron utility called
+Plugins are loaded into rivine-UI on run-time through an electron utility called
 the [web-view tag](http://electron.atom.io/docs/v0.29.0/api/web-view-tag/).
 These tags open up the viewing of guest content by pointing to an HTML file
 that displays the rest of the plugin, importing CSS, Javascript as is usually
@@ -27,19 +27,18 @@ For this, we'll go through implementing the Overview plugin.
 
 Plugins are loaded dynamically based on the folders in the plugins/ directory.
 The sidebar is handled on our part so plugins only need a properly
-placed png file and folder name for a button. 
+placed png file and folder name for a button.
 
 The plugin directory should now be:
 
 ```diff
- Sia-UI/plugins/Overview/
+ rivine-UI/plugins/Overview/
  └── assets/
      └── button.png
 ```
 
 The Overview uses the 'bars' [font awesome icon in png form](http://fa2png.io/).
-Loading up Sia-UI again, we'll see: ![Impressive plugin ain't
-it?](/doc/assets/sidebar.png)
+
 
 ## Making a Mainbar View
 
@@ -74,7 +73,7 @@ user. Inspired by the previous UI, we pick the block height, peer count, and
 wallet balance. The first lets the user know they're up to date with the
 blockchain. The second lets the user further know that they're connected with
 other people on the network. Lastly each and every user, whether they host,
-rent, or mine, will probably have some balance of Siacoin.
+rent, or mine, will probably have some balance of Coins.
 
 We'll add a containing div, let's call it 'capsule' for our header section and
 div fields for each of these to our index.html, keeping them all the same class
@@ -96,12 +95,11 @@ unique id's to update each of them separately later in JS.
 The plugin directory should now be:
 
 ```diff
- Sia-UI/plugins/Overview/
+ rivine-UI/plugins/Overview/
 +├── index.html
  └── assets/
      └── button.png
 ```
-Loading up Sia-UI again, we'll see: ![Impressive plugin ain't it?](/doc/assets/basic-overview.png)
 
 ## Styling the View
 
@@ -132,7 +130,7 @@ section:
 The plugin-standard.css:
 
 ```css
-/*	Style Guide: 
+/*	Style Guide:
  *		Transparent: 70% Opacity
  *
  * 		White:      #FFFFFF
@@ -288,12 +286,12 @@ The Overview-specific css:
 }
 ```
 
-Quite a lot to take in without review, but that's how styling webpages goes. 
+Quite a lot to take in without review, but that's how styling webpages goes.
 
 The plugin directory should reflect our css files:
 
 ```diff
- Sia-UI/plugins/Overview/
+ rivine-UI/plugins/Overview/
  ├── index.html
  ├── assets/
  │   └── button.png
@@ -301,7 +299,6 @@ The plugin directory should reflect our css files:
 +    └── overview.css
 ```
 
-Loading up Sia-UI again, we'll see: ![Impressive plugin ain't it?](/doc/assets/styled-overview.png)
 
 ## Updating our View
 
@@ -317,7 +314,7 @@ and fill our fields after the general skeleton has been parsed.
 ```
 
 After we make such a javascript file, we should cover the additional tools
-Sia-UI gives to its plugins beyond just a sidebar-button.
+rivine-UI gives to its plugins beyond just a sidebar-button.
 
 ### IPC
 
@@ -358,7 +355,7 @@ For example usage, view the js files of any currently implemented plugins.
 
 ### Making API calls
 
-To send api calls through the UI to a hosted siad, call ipc's sendToHost()
+To send api calls through the UI to a hosted rivined, call ipc's sendToHost()
 function along the message channel 'api-call' and pass in the string of the
 call address.
 
@@ -424,7 +421,7 @@ function update() {
 function start() {
 	// DEVTOOL: uncomment to bring up devtools on plugin view
 	// IPCRenderer.sendToHost('devtools');
-	
+
 	// Call the API
 	update();
 }
@@ -439,15 +436,15 @@ function stop() {
 
 This all functions well enough, but it's a bit of an amateur design when one
 actually uses the plugin. Numbers are jerky and we see a large amount of
-numbers for our balance since it's in 10^-24 Siacoin, or what we call
+numbers for our balance since it's in 10^-24 Coins, or what we call
 Hastings, similar to Bitcoin and satoshis.
 
 ```js
-// Convert to Siacoin
-function formatSiacoin(hastings) {
+// Convert to Coins
+function formatCoin(hastings) {
 	var ConversionFactor = Math.pow(10, 24);
 	var display = hastings / ConversionFactor);
-	return display + ' SC';
+	return display + ' C';
 }
 ```
 
@@ -464,11 +461,11 @@ const BigNumber = require('bignumber.js');
 BigNumber.config({ DECIMAL_PLACES: 24 })
 BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
 
-// Convert to Siacoin
-function formatSiacoin(hastings) {
+// Convert to Coins
+function formatCoin(hastings) {
 	var ConversionFactor = new BigNumber(10).pow(24);
 	var display = new BigNumber(hastings).dividedBy(ConversionFactor);
-	return display + ' SC';
+	return display + ' C';
 }
 ```
 
@@ -523,11 +520,11 @@ function update() {
 	updating = setTimeout(update, 1000);
 }
 
-// Convert to Siacoin
-function formatSiacoin(hastings) {
+// Convert to Coins
+function formatCoin(hastings) {
 	var ConversionFactor = new BigNumber(10).pow(24);
 	var display = new BigNumber(hastings).dividedBy(ConversionFactor);
-	return display + ' SC';
+	return display + ' C';
 }
 
 // Define IPC listeners and update DOM per call
@@ -557,7 +554,7 @@ IPCRenderer.on('/consensus/status', function(event, err, result) {
 function start() {
 	// DEVTOOL: uncomment to bring up devtools on plugin view
 	// IPCRenderer.sendToHost('devtools');
-	
+
 	// Call the API
 	update();
 }
@@ -569,7 +566,7 @@ function stop() {
 ```
 
 ```diff
- Sia-UI/plugins/Overview/
+ rivine-UI/plugins/Overview/
  ├── index.html
  ├── assets/
  │   └── button.png
@@ -580,9 +577,7 @@ function stop() {
 ```
 
 Loading up Sia-UI again, we'll all see something different because the numbers
-should be pulled from the API and one's siad-state. In our case, the view shows
-the yet-encrypted release network:
-![Impressive plugin ain't it?](/doc/assets/working-overview.png)
+should be pulled from the API and one's rivined-state.
 
 ### Abstracting the Extra Mile
 
@@ -604,7 +599,7 @@ function updateField(err, caption, newValue, elementID) {
 
 // Define IPC listeners and update DOM per call
 IPCRenderer.on('balance-update', function(event, err, result) {
-	var value = result !== null ? formatSiacoin(result.ConfirmedSiacoinBalance) : null;
+	var value = result !== null ? formatSiacoin(result.ConfirmedCoinBalance) : null;
 	updateField(err, 'Balance: ', value, 'balance');
 });
 IPCRenderer.on('peers-update', function(event, err, result) {
@@ -650,18 +645,18 @@ function updateField(err, caption, newValue, elementID) {
 	}
 }
 
-// Convert to Siacoin
-function formatSiacoin(hastings) {
+// Convert to Coins
+function formatCoin(hastings) {
 	var ConversionFactor = new BigNumber(10).pow(24);
 	var display = new BigNumber(hastings).dividedBy(ConversionFactor);
-	return display + ' SC';
+	return display + ' C';
 }
 
 // Called by the UI upon showing
 function start() {
 	// DEVTOOL: uncomment to bring up devtools on plugin view
 	// IPCRenderer.sendToHost('devtools');
-	
+
 	// Call the API
 	update();
 }
@@ -733,6 +728,4 @@ document.getElementById('create-address').onclick = function() {
 };
 ```
 
-Which will make this tooltip appear on click as such:
-
-![It's the details that make the best UI](/doc/assets/wallet-tooltip.png)
+Which will make this tooltip appear on click.

@@ -1,12 +1,12 @@
 # Development Flow
 
-## Packaging & Releasing Sia-UI
+## Packaging & Releasing rivine-UI
 
 There are some packaging scripts (using electron-packager) in the package.json.
 
 For them to work, you will need to have release archives of the correct version
-in the `release` folder of the Sia package in your GOPATH. To do so, run `make
-xc` from the Sia repository followed by `npm run release` from the Sia-UI
+in the `release` folder of the rivine package in your GOPATH. To do so, run `make
+xc` from the rivine repository followed by `npm run release` from the rivine-UI
 repository.
 
 ## Building Distributables
@@ -31,4 +31,3 @@ will generate documentation about the UI's classes and functions. It's somewhat
 messy though.
 * `npm run lint`
 will output style suggestions for the UI's javascript, including for plugins.
-

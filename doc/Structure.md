@@ -1,14 +1,14 @@
 # [Structure](Structure.md)
 
-We try to keep the root level structure simple while still adhereing to
+We try to keep the root level structure simple while still adhering to
 electron app standards.
 
 The full root level structure is as follows
 
 ```diff
- Sia-UI/
+ rivine-UI/
  ├── .git/                // Git folder
-+├── Sia/                 // Contains siad and wallet files
++├── Rivine/              // Contains rivined and wallet files
  ├── assets/              // Font & image files
  ├── css/                 // General CSS
  ├── doc/                 // Documentation like this file
@@ -67,10 +67,10 @@ Contains any markdown files, except the README.md, such as this one.
 Contains all the javascript files that aren't plugin specific and make up the
 functionality of the general UI. In this immediate folder level, there's:
 
-* `getSia.js` - ran upon the command `npm install`, downloads a Sia release to
+* `getRivine.js` - ran upon the command `npm install`, downloads a Rivine release to
   use. It's mostly useful to automatically get said release onto a TravisCI
   server. Otherwise, users generally shouldn't be using this file to download
-  Sia for security purposes.
+  Rivine for security purposes.
 * `mainjs/` - Contains any logic related to the main process, [a concept of
   electron's](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md#differences-between-main-process-and-renderer-process).
   It's mostly startup logic.
@@ -79,7 +79,7 @@ functionality of the general UI. In this immediate folder level, there's:
 
 ## [node_modules/](https://www.npmjs.com/)
 Created upon `npm install`. Contains all npm package dependencies used by the UI
-and its plugins. 
+and its plugins.
 
 ## [plugins/](/doc/Plugins.md)
 Contains all plugin folders, natively designed or third-party. Plugins are
@@ -95,7 +95,7 @@ Tests written using [spectron](https://github.com/kevinsawicki/spectron).
 
 ## config.json
 Created upon a user opening the UI. It tracks things like window
-position, siad's path, etc. It's managed by the main process and saved upon
+position, rivined's path, etc. It's managed by the main process and saved upon
 opening/closing the UI
 
 ## errors.log
@@ -105,13 +105,13 @@ Created upon a user opening the UI. Records error notifications for the UI.
 The starting point of the renderer process. This file structures the layout of
 the general UI and loads `/js/rendererjs/uiManager.js` and
 `/js/rendererjs/pluginManager.js`. This is the only non-plugin html file since
-Sia-UI is intended to be a one-page desktop app.
+rivine-UI is intended to be a one-page desktop app.
 
 ## index.js
 The entry point of the app and main process. This:
 * Initializes a browser window using 'index.html'
 * Loads up a config.json
-* Initializes siad, through the node wrapper, [sia.js](https://github.com/NebulousLabs/Nodejs-Sia)
+* Initializes rivined, through the node wrapper, [sia.js](https://github.com/NebulousLabs/Nodejs-Sia)
 * Takes advantage of many electron libraries to give a more OS-specific
   experience
 
@@ -121,4 +121,3 @@ its dependencies and devDependencies list as well as its scripts. See [A useful
 guide about using NPM as a build
 tool](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/) for a
 guide of how the scripts work.
-
