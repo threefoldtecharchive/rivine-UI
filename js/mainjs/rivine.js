@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.hastingsToRivinecoins = exports.rivinecoinsToHastings = exports.call = exports.isRunning = exports.launch = exports.connect = exports.errCouldNotConnect = undefined;
+exports.hastingsToCoins = exports.coinsToHastings = exports.call = exports.isRunning = exports.launch = exports.connect = exports.errCouldNotConnect = undefined;
 
 var _regenerator = require('babel-runtime/regenerator');
 
@@ -115,7 +115,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // rivine.js error constants
 var errCouldNotConnect = exports.errCouldNotConnect = new Error('could not connect to the Rivine daemon');
 
-// Rivinecoin -> hastings unit conversion functions
+// Coin -> hastings unit conversion functions
 // These make conversion between units of Rivine easy and consistent for developers.
 // Never return exponentials from BigNumber.toString, since they confuse the API
 // rivine.js: a lightweight node wrapper for starting, and communicating with
@@ -124,8 +124,8 @@ _bignumber2.default.config({ EXPONENTIAL_AT: 1e+9 });
 _bignumber2.default.config({ DECIMAL_PLACES: 30 });
 
 var hastingsPerCoin = new _bignumber2.default('10').toPower(24);
-var coinsToHastings = function coinsToHastings(rivinecoins) {
-	return new _bignumber2.default(rivinecoins).times(hastingsPerCoin);
+var coinsToHastings = function coinsToHastings(coins) {
+	return new _bignumber2.default(coins).times(hastingsPerCoin);
 };
 var hastingsToCoins = function hastingsToCoins(hastings) {
 	return new _bignumber2.default(hastings).dividedBy(hastingsPerCoin);

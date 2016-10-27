@@ -8,7 +8,7 @@ const initialState = Map({
 	unlocking: false,
 	confirmedbalance: '0',
 	unconfirmedbalance: '0',
-	rivinefundbalance: '0',
+	blockstakebalance: '0',
 	transactions: List(),
 	ntransactions: 30,
 	showSendPrompt: false,
@@ -46,7 +46,7 @@ export default function walletReducer(state = initialState, action) {
 	case constants.SET_BALANCE:
 		return state.set('confirmedbalance', action.confirmed)
                 .set('unconfirmedbalance', action.unconfirmed)
-                .set('rivinefundbalance', action.rivinefunds)
+                .set('blockstakebalance', action.blockstakebalance)
 	case constants.SHOW_MORE_TRANSACTIONS:
 		return state.set('ntransactions', state.get('ntransactions') + action.increment)
 	case constants.SET_TRANSACTIONS:

@@ -21,17 +21,17 @@ const TransactionList = ({transactions, ntransactions, actions}) => {
 	}
 	const transactionComponents = transactions.take(ntransactions).map((txn, key) => {
 		let valueData = ''
-		if (txn.transactionsums.totalSiacoin.abs().gt(0)) {
-			valueData += txn.transactionsums.totalSiacoin.round(4).toNumber().toLocaleString() + ' SC '
+		if (txn.transactionsums.totalCoin.abs().gt(0)) {
+			valueData += txn.transactionsums.totalCoin.round(4).toNumber().toLocaleString() + ' C '
 		}
-		if (txn.transactionsums.totalSiafund.abs().gt(0)) {
-			valueData += txn.transactionsums.totalSiafund.round(4).toNumber().toLocaleString() + ' SF '
+		if (txn.transactionsums.totalBlockstakes.abs().gt(0)) {
+			valueData += txn.transactionsums.totalBlockstakes.round(4).toNumber().toLocaleString() + ' BS '
 		}
 		if (txn.transactionsums.totalMiner.abs().gt(0)) {
-			valueData += txn.transactionsums.totalMiner.round(4).toNumber().toLocaleString() + ' SC (miner) '
+			valueData += txn.transactionsums.totalMiner.round(4).toNumber().toLocaleString() + ' C (miner) '
 		}
 		if (valueData === '') {
-			valueData = '0 SC'
+			valueData = '0 C'
 		}
 		return (
 			<tr key={key}>

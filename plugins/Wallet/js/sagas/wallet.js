@@ -9,7 +9,7 @@ import { walletUnlockError } from '../actions/error.js'
 const sendError = (e) => {
 	RivineAPI.showError({
 		title: 'Rivine-UI Wallet Error',
-		content: e.stack,
+		content: e.message,
 	})
 }
 

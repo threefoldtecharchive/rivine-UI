@@ -26,29 +26,29 @@ const sumCurrency = (txns, currency) => txns.reduce((sum, txn) => {
 
 // Compute the net value and currency type of a transaction.
 const computeTransactionSum = (txn) => {
-	let totalRivinecoinInput = new BigNumber(0)
-	let totalRivinefundInput = new BigNumber(0)
+	let totalCoinInput = new BigNumber(0)
+	let totalBlockstakeInput = new BigNumber(0)
 	let totalMinerInput = new BigNumber(0)
 
-	let totalRivinecoinOutput = new BigNumber(0)
-	let totalRivinefundOutput = new BigNumber(0)
+	let totalCoinOutput = new BigNumber(0)
+	let totalBlockstakeOutput = new BigNumber(0)
 	let totalMinerOutput = new BigNumber(0)
 
 	if (txn.inputs) {
 		const walletInputs = txn.inputs.filter((input) => input.walletaddress && input.value)
-		totalRivinecoinInput = sumCurrency(walletInputs, 'rivinecoin')
-		totalRivinefundInput = sumCurrency(walletInputs, 'rivinefund')
+		totalCoinInput = sumCurrency(walletInputs, 'coin')
+		totalBlockstakeInput = sumCurrency(walletInputs, 'blockstake')
 		totalMinerInput = sumCurrency(walletInputs, 'miner')
 	}
 	if (txn.outputs) {
 		const walletOutputs = txn.outputs.filter((input) => input.walletaddress && input.value)
-		totalRivinecoinOutput = sumCurrency(walletOutputs, 'rivinecoin')
-		totalRivinefundOutput = sumCurrency(walletOutputs, 'rivinefund')
+		totalCoinOutput = sumCurrency(walletOutputs, 'coin')
+		totalBlockstakeOutput = sumCurrency(walletOutputs, 'blockstake')
 		totalMinerOutput = sumCurrency(walletOutputs, 'miner')
 	}
 	return {
-		totalRivinecoin: RivineAPI.hastingsToCoins(totalRivinecoinOutput.minus(totalRivinecoinInput)),
-		totalRivinefund: totalRivinefundOutput.minus(totalRivinefundInput),
+		totalCoin: RivineAPI.hastingsToCoins(totalCoinOutput.minus(totalCoinInput)),
+		totalBlockstake: totalBlockstakeOutput.minus(totalBlockstakeInput),
 		totalMiner:   RivineAPI.hastingsToCoins(totalMinerOutput.minus(totalMinerInput)),
 	}
 }
@@ -57,7 +57,7 @@ const computeTransactionSum = (txn) => {
 // The transaction objects contain the following values:
 // {
 //   confirmed (boolean): whether this transaction has been confirmed by the network
-//	 transactionsums: the net rivinecoin, rivinefund, and miner values
+//	 transactionsums: the net coin, blockstake, and miner values
 //   transactionid: The transaction ID
 //   confirmationtimestamp:  The time at which this transaction occurred
 // }

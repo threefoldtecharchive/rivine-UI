@@ -4,7 +4,7 @@ import { SET_SEND_AMOUNT, SET_SEND_ADDRESS, START_SEND_PROMPT } from '../constan
 const initialState = Map({
 	sendaddress: '',
 	sendamount: '',
-	currencytype: 'rivinecoins',
+	currencytype: 'coins',
 })
 export default function sendPromptReducer(state = initialState, action) {
 	switch (action.type) {
