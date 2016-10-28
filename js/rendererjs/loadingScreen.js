@@ -2,7 +2,7 @@
 // if an available daemon is not running on the host,
 // launch an instance of rivined using config.js.
 import { remote } from 'electron'
-import * as Rivined from '../mainjs/rivine.js'
+import * as Rivined from '../../rivine.js'
 import Path from 'path'
 import React from 'react'
 import ReactDOM from 'react-dom'

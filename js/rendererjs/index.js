@@ -1,6 +1,6 @@
 // Imported Electron modules
 import Path from 'path'
-import * as Rivined from '../mainjs/rivine.js'
+import * as Rivined from '../../rivine.js'
 import loadingScreen from './loadingScreen.js'
 import { remote, ipcRenderer } from 'electron'
 import { unloadPlugins, loadPlugin, setCurrentPlugin, getOrderedPlugins, getPluginName } from './plugins.js'

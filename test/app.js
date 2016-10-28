@@ -1,21 +1,21 @@
 import { Application } from 'spectron'
 import { expect } from 'chai'
 import psTree from 'ps-tree'
-import * as Siad from 'sia.js'
+import * as Rivined from '../rivine.js'
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-// getSiadChild takes an input pid and looks at all the child process of that
+// getRivinedChild takes an input pid and looks at all the child process of that
 // pid, returning an object with the fields {exists, pid}, where exists is true
-// if the input pid has a 'siad' child, and the pid is the process id of the
+// if the input pid has a 'rivined' child, and the pid is the process id of the
 // child.
-const getSiadChild = (pid) => new Promise((resolve, reject) => {
+const getRivinedChild = (pid) => new Promise((resolve, reject) => {
 	psTree(pid, (err, children) => {
 		if (err) {
 			reject(err)
 		}
 		children.forEach((child) => {
-			if (child.COMMAND === 'siad') {
+			if (child.COMMAND === 'rivined') {
 				resolve({exists: true, pid: child.PID})
 			}
 		})
@@ -23,15 +23,15 @@ const getSiadChild = (pid) => new Promise((resolve, reject) => {
 	})
 })
 
-// pkillSiad kills all siad processes running on the machine, used in these
+// pkillRivined kills all rivined processes running on the machine, used in these
 // tests to ensure a clean env
-const pkillSiad = () => new Promise((resolve, reject) => {
+const pkillRivined = () => new Promise((resolve, reject) => {
 	psTree(0, (err, children) => {
 		if (err) {
 			reject(err)
 		}
 		children.forEach((child) => {
-			if (child.COMMAND === 'siad') {
+			if (child.COMMAND === 'rivined') {
 				process.kill(child.PID, 'SIGKILL')
 			}
 		})
@@ -56,14 +56,14 @@ const isProcessRunning = (pid) => {
 /* eslint-disable no-unused-expressions */
 describe('startup and shutdown behaviour', () => {
 	after(async () => {
-		// never leave a dangling siad
-		await pkillSiad()
+		// never leave a dangling rivined
+		await pkillRivined()
 	})
 	describe('window closing behaviour', function() {
 		this.timeout(10000)
 		let app
 		beforeEach(async () => {
-			await pkillSiad()
+			await pkillRivined()
 			app = new Application({
 				path: './node_modules/electron-prebuilt/dist/electron',
 				args: [
@@ -82,7 +82,7 @@ describe('startup and shutdown behaviour', () => {
 		it('hides the window and persists in tray if closeToTray = true', async () => {
 			await app.client.waitUntilWindowLoaded()
 			app.webContents.executeJavaScript('window.closeToTray = true')
-			while (await app.client.getText('#overlay-text') !== 'Welcome to Sia') {
+			while (await app.client.getText('#overlay-text') !== 'Welcome to Rivine') {
 				await sleep(200)
 			}
 			app.browserWindow.close()
@@ -92,31 +92,31 @@ describe('startup and shutdown behaviour', () => {
 		it('quits gracefully on close if closeToTray = false', async () => {
 			await app.client.waitUntilWindowLoaded()
 			app.webContents.executeJavaScript('window.closeToTray = false')
-			while (await app.client.getText('#overlay-text') !== 'Welcome to Sia') {
+			while (await app.client.getText('#overlay-text') !== 'Welcome to Rivine') {
 				await sleep(200)
 			}
 			const pid = await app.mainProcess.pid()
-			const siadProcess = await getSiadChild(pid)
-			expect(siadProcess.exists).to.be.true
+			const rivinedProcess = await getRivinedChild(pid)
+			expect(rivinedProcess.exists).to.be.true
 
 			app.browserWindow.close()
 			while (await app.client.isVisible('#overlay-text') === false) {
 				await sleep(10)
 			}
-			while (await app.client.getText('#overlay-text') !== 'Quitting Sia...') {
+			while (await app.client.getText('#overlay-text') !== 'Quitting Rivine...') {
 				await sleep(10)
 			}
 			while (isProcessRunning(pid)) {
 				await sleep(10)
 			}
-			expect(isProcessRunning(siadProcess.pid)).to.be.false
+			expect(isProcessRunning(rivinedProcess.pid)).to.be.false
 		})
 	})
-	describe('startup with no siad currently running', function() {
+	describe('startup with no rivined currently running', function() {
 		this.timeout(120000)
 		let app
 		before(async () => {
-			await pkillSiad()
+			await pkillRivined()
 			app = new Application({
 				path: './node_modules/electron-prebuilt/dist/electron',
 				args: [
@@ -131,36 +131,36 @@ describe('startup and shutdown behaviour', () => {
 				app.stop()
 			}
 		})
-		it('starts siad and loads correctly on launch', async () => {
+		it('starts rivined and loads correctly on launch', async () => {
 			const pid = await app.mainProcess.pid()
 			await app.client.waitUntilWindowLoaded()
-			while (await app.client.getText('#overlay-text') !== 'Welcome to Sia') {
+			while (await app.client.getText('#overlay-text') !== 'Welcome to Rivine') {
 				await sleep(200)
 			}
-			const siadProcess = await getSiadChild(pid)
-			expect(siadProcess.exists).to.be.true
+			const rivinedProcess = await getRivinedChild(pid)
+			expect(rivinedProcess.exists).to.be.true
 		})
-		it('gracefully exits siad on quit', async () => {
+		it('gracefully exits rivined on quit', async () => {
 			const pid = await app.mainProcess.pid()
-			const siadProcess = await getSiadChild(pid)
-			expect(siadProcess.exists).to.be.true
+			const rivinedProcess = await getRivinedChild(pid)
+			expect(rivinedProcess.exists).to.be.true
 			app.webContents.send('quit')
-			while (await app.client.getText('#overlay-text') !== 'Quitting Sia...') {
+			while (await app.client.getText('#overlay-text') !== 'Quitting Rivine...') {
 				await sleep(200)
 			}
 			while (isProcessRunning(pid)) {
 				await sleep(200)
 			}
-			expect(isProcessRunning(siadProcess.pid)).to.be.false
+			expect(isProcessRunning(rivinedProcess.pid)).to.be.false
 		})
 	})
-	describe('startup with a siad already running', function() {
+	describe('startup with a rivined already running', function() {
 		this.timeout(120000)
 		let app
-		let siadProcess
+		let rivinedProcess
 		before(async () => {
-			await pkillSiad()
-			siadProcess = Siad.launch('siad')
+			await pkillRivined()
+			rivinedProcess = Rivined.launch('rivined')
 			app = new Application({
 				path: './node_modules/electron-prebuilt/dist/electron',
 				args: [
@@ -170,29 +170,29 @@ describe('startup and shutdown behaviour', () => {
 			return app.start()
 		})
 		after(async () => {
-			await pkillSiad()
+			await pkillRivined()
 			if (app.isRunning()) {
 				app.webContents.send('quit')
 				app.stop()
 			}
 		})
-		it('connects and loads correctly to the running siad', async () => {
+		it('connects and loads correctly to the running rivined', async () => {
 			const pid = await app.mainProcess.pid()
 			await app.client.waitUntilWindowLoaded()
 			while (await app.client.getText('#overlay-text') !== 'Welcome back') {
 				await sleep(200)
 			}
-			const childSiad = await getSiadChild(pid)
-			expect(childSiad.exists).to.be.false
+			const childRivined = await getRivinedChild(pid)
+			expect(childRivined.exists).to.be.false
 		})
-		it('doesnt quit siad on exit', async () => {
+		it('doesnt quit rivined on exit', async () => {
 			const pid = await app.mainProcess.pid()
 			app.webContents.send('quit')
 			while (isProcessRunning(pid)) {
 				await sleep(200)
 			}
-			expect(isProcessRunning(siadProcess.pid)).to.be.true
-			siadProcess.kill('SIGKILL')
+			expect(isProcessRunning(rivinedProcess.pid)).to.be.true
+			rivinedProcess.kill('SIGKILL')
 		})
 	})
 })

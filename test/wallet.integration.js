@@ -2,15 +2,15 @@ import { expect } from 'chai'
 import { spy, stub, match } from 'sinon'
 import { mount } from 'enzyme'
 import { initWallet } from '../plugins/Wallet/js/main.js'
-import * as Siad from 'sia.js'
+import * as Rivined from '../rivine.js'
 
 let walletComponent
 
-const mockSiaAPI = {
+const mockRivineAPI = {
 	call: stub(),
 	config: {},
-	hastingsToSiacoins: Siad.hastingsToSiacoins,
-	siacoinsToHastings: Siad.siacoinsToHastings,
+	hastingsToCoins: Rivined.hastingsToCoins,
+	coinsToHastings: Rivined.coinsToHastings,
 	openFile: () => spy(),
 	saveFile: () => spy(),
 	showMessage: () => spy(),
@@ -18,7 +18,7 @@ const mockSiaAPI = {
 }
 
 const setMockLockState = (lockstate) => {
-	SiaAPI.call.withArgs('/wallet').callsArgWith(1, null, lockstate)
+	RivineAPI.call.withArgs('/wallet').callsArgWith(1, null, lockstate)
 }
 
 // This is a sinon matcher function used to set up separate mocks for
@@ -34,38 +34,38 @@ const callHasPassword = (call, password) => {
 }
 
 const setMockWalletPassword = (password) => {
-	SiaAPI.call.withArgs(match((call) => callHasPassword(call, password))).callsArgWith(1, null)
+	RivineAPI.call.withArgs(match((call) => callHasPassword(call, password))).callsArgWith(1, null)
 }
 
 const setMockIncorrectWalletPassword = (password) => {
-	SiaAPI.call.withArgs(match((call) => callHasPassword(call, password))).callsArgWith(1, {message: 'incorrect password'})
+	RivineAPI.call.withArgs(match((call) => callHasPassword(call, password))).callsArgWith(1, {message: 'incorrect password'})
 }
 
 const setMockReceiveAddress = (address) => {
-	SiaAPI.call.withArgs('/wallet/address').callsArgWith(1, null, {
+	RivineAPI.call.withArgs('/wallet/address').callsArgWith(1, null, {
 		address,
 	})
 }
-const mockSendSiacoin = () => {
-	SiaAPI.call.withArgs(match.has('url', '/wallet/siacoins')).callsArgWith(1, null)
+const mockSendCoin = () => {
+	RivineAPI.call.withArgs(match.has('url', '/wallet/coins')).callsArgWith(1, null)
 }
 
-// Set up default siad call mocks for the wallet.
-// Currently, wallet lock state, login, and send siacoin calls are mocked.
+// Set up default rivined call mocks for the wallet.
+// Currently, wallet lock state, login, and send coin calls are mocked.
 const setupMockCalls = () => {
-	SiaAPI.call.withArgs(match({
+	RivineAPI.call.withArgs(match({
 		url: '/wallet/lock',
 		method: 'POST',
 	})).callsArgWith(1, null)
 	setMockLockState({unlocked: false, encrypted: true})
 	setMockWalletPassword('testpass')
 	setMockIncorrectWalletPassword('wrongpass')
-	mockSendSiacoin()
+	mockSendCoin()
 }
 
 describe('wallet plugin integration tests', () => {
 	before(() => {
-		global.SiaAPI = mockSiaAPI
+		global.RivineAPI = mockRivineAPI
 		// Set NODE_ENV to production to suppress react warnings
 		// caused by externally triggering events on mounted components
 		process.env.NODE_ENV = 'production'
@@ -97,7 +97,7 @@ describe('wallet plugin integration tests', () => {
 			}
 		}, 100)
 	})
-	it('shows a new wallet address when receive siacoins is clicked', (done) => {
+	it('shows a new wallet address when receive coins is clicked', (done) => {
 		setMockReceiveAddress('testaddress')
 		expect(walletComponent.find('.receive-prompt')).to.have.length(0)
 		walletComponent.find('.receive-button').first().simulate('click')
@@ -115,16 +115,16 @@ describe('wallet plugin integration tests', () => {
 		walletComponent.find('.send-button').first().simulate('click')
 		expect(walletComponent.find('.sendprompt')).to.have.length(1)
 	})
-	it('sends the correct amount of siacoins to the correct address', () => {
+	it('sends the correct amount of coins to the correct address', () => {
 		walletComponent.find('.sendamount input').simulate('change', { target: { value: '100' }})
 		walletComponent.find('.sendaddress input').simulate('change', { target: { value: 'testaddress'}})
-		walletComponent.find('.send-siacoin-button').simulate('click')
-		expect(SiaAPI.call.lastCall.args[0]).to.deep.equal({
-			url: '/wallet/siacoins',
+		walletComponent.find('.send-coin-button').simulate('click')
+		expect(RivineAPI.call.lastCall.args[0]).to.deep.equal({
+			url: '/wallet/coins',
 			method: 'POST',
 			qs: {
 				destination: 'testaddress',
-				amount: SiaAPI.siacoinsToHastings('100').toString(),
+				amount: RivineAPI.coinsToHastings('100').toString(),
 			},
 		})
 	})

@@ -1,6 +1,6 @@
 // pluginapi.js: Rivine-UI plugin API interface exposed to all plugins.
 // This is injected into every plugin's global namespace.
-import * as Rivined from '../mainjs/rivine.js'
+import * as Rivined from '../../rivine.js'
 import { remote } from 'electron'
 import React from 'react'
 import DisabledPlugin from './disabledplugin.js'

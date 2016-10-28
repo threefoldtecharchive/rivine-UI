@@ -24,8 +24,8 @@ const TransactionList = ({transactions, ntransactions, actions}) => {
 		if (txn.transactionsums.totalCoin.abs().gt(0)) {
 			valueData += txn.transactionsums.totalCoin.round(4).toNumber().toLocaleString() + ' C '
 		}
-		if (txn.transactionsums.totalBlockstakes.abs().gt(0)) {
-			valueData += txn.transactionsums.totalBlockstakes.round(4).toNumber().toLocaleString() + ' BS '
+		if (txn.transactionsums.totalBlockstake.abs().gt(0)) {
+			valueData += txn.transactionsums.totalBlockstake.round(4).toNumber().toLocaleString() + ' BS '
 		}
 		if (txn.transactionsums.totalMiner.abs().gt(0)) {
 			valueData += txn.transactionsums.totalMiner.round(4).toNumber().toLocaleString() + ' C (miner) '

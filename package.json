@@ -60,9 +60,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/rivine/Rivine-UI.git"
+    "url": "git://github.com/rivine/rivine-UI.git"
   },
   "bugs": {
-    "url": "https://github.com/rivine/Rivine-UI/issues"
+    "url": "https://github.com/rivine/rivine-UI/issues"
   }
 }

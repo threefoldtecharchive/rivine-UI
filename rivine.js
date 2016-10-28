@@ -174,7 +174,7 @@ var launch = function launch(path, settings) {
 */
 // Modify for rivine daemon
 var launch = function launch(path,  settings) {
-	var defaultSettigns = {
+	var defaultSettings = {
 		'api-addr': 'localhost:23110',
 		'host-addr': ':23112',
 		'rpc-addr': ':23111',

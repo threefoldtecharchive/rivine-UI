@@ -12,7 +12,7 @@ const mock = {
 	'react-dom': {
 		render: sinon.spy(),
 	},
-	'sia.js': {
+	'rivine.js': {
 		isRunning: () => new Promise((resolve) => {
 			resolve(running)
 		}),
@@ -24,8 +24,8 @@ const mock = {
 			getGlobal: (name) => {
 				if (name === 'config') {
 					return {
-						siad: {
-							path: 'testpath/siad',
+						rivined: {
+							path: 'testpath/rivined',
 							datadir: 'testpath/datadir',
 							detached: false,
 						},
@@ -46,10 +46,10 @@ const mock = {
 proxyquire('../js/rendererjs/pluginapi.js', mock)
 
 describe('plugin API', () => {
-	it('creates a SiaAPI window object', () => {
-		expect(window.SiaAPI).to.exist
+	it('creates a RivineAPI window object', () => {
+		expect(window.RivineAPI).to.exist
 	})
-	it('does not mount disabled plugin component if siad is running', function(done) {
+	it('does not mount disabled plugin component if rivined is running', function(done) {
 		running = true
 		this.timeout(10000)
 		const poll = setInterval(() => {
@@ -59,7 +59,7 @@ describe('plugin API', () => {
 			}
 		}, 50)
 	})
-	it('mounts disabled plugin if siad is not running', function(done) {
+	it('mounts disabled plugin if rivined is not running', function(done) {
 		running = false
 		this.timeout(10000)
 		const poll = setInterval(() => {
@@ -70,10 +70,10 @@ describe('plugin API', () => {
 		}, 50)
 	})
 	describe('DisabledPlugin component', () => {
-		it('calls siajs.launch on click', () => {
-			const component = shallow(<DisabledPlugin startSiad={mock['sia.js'].launch} />)
+		it('calls rivinejs.launch on click', () => {
+			const component = shallow(<DisabledPlugin startRivined={mock['rivine.js'].launch} />)
 			component.find('button').first().simulate('click')
-			expect(mock['sia.js'].launch.called).to.be.true
+			expect(mock['rivine.js'].launch.called).to.be.true
 		})
 	})
 })

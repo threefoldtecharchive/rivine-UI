@@ -29,7 +29,8 @@ The full root level structure is as follows
 +├── errors.log           // Records errors presented via the UI's notifications
  ├── index.html           // The first markup page that loads
  ├── index.js             // Entry point of the UI
- └── package.json         // Used with electron and npm
+ ├── package.json         // Used with electron and npm
+ └── rivine.js            // Node wrapper for rivined
 ```
 Note: '+' marked lines are generated and aren't inherent to the repository
 
