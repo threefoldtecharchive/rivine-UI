@@ -3,9 +3,6 @@
 [![Build Status](https://travis-ci.org/rivine/rivine-UI.svg?branch=master)](https://travis-ci.org/rivine/rivine-UI)
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
-# A Highly Efficient Decentralized Storage Network
-
-![A snapshot of the the file library](/doc/assets/files.png)
 This is the a reference user interface application for [Rivine](https://github.com/rivine/rivine), it
 is a desktop application based off the
 [electron](https://github.com/atom/electron) framework. The ambition behind
@@ -18,13 +15,7 @@ this project is to provide an example User Interface for projects using the Rivi
 Earlier node versions may work, but they do not have guaranteed support.
 - `libxss` is a required dependency for Electron on Debian, it can be installed with `sudo apt-get install libxss1`.
 
-## Running
-
-[Download your OS's release archive and unzip it](https://github.com/rivine/rivine-UI/releases)
-
-### OR
-
-Run from source
+## Run from source
 
 0. Install dependencies mentioned above
 1. Download or `git clone` the repository
