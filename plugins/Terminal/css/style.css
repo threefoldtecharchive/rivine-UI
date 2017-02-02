@@ -68,7 +68,7 @@
 footer {
 	position: absolute;
 	bottom: 0px;
-	background-color: #00CBA0;
+	background-color: #61abff;
 	width: 100%;
 }
 
@@ -100,7 +100,7 @@ footer {
 	position: absolute;
 	top: 0px;
 	right: 25px;
-	background-color: #00CBA0;
+	background-color: #61abff;
 	color: #FFF;
 	cursor: pointer;
 	font-size: 1.4em;
