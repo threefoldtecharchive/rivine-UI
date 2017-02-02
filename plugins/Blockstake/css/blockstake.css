@@ -9,14 +9,18 @@
  * 		Grey-Black: #4A4A4A
  * 		Black:      #000000
  */
-.about {
+.blockstakes {
 	color: #c5c5c5;
 	margin: 20px 20px;
 	padding-left: 10px;
 	padding-bottom: 10px;
-	border-bottom: 1px solid #ececec;
+	border-bottom: 1px solid #e0e0e0;
 }
-.about .version {
+.blockstakes .amount {
+	display: inline-block;
+	color: #4a4a4a;
+}
+.blockstakes .difficulty {
 	display: inline-block;
 	color: #4a4a4a;
 }

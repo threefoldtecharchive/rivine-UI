@@ -15,7 +15,7 @@ const onBoundsChange = (mainWindow, config) => () => {
 // Creates the window and loads index.html
 export default function(config) {
 	// Create the browser
-	const iconPath = Path.join(__dirname, '../', 'assets', 'icon.png')
+	const iconPath = Path.join(__dirname, '../', 'assets', 'tray.png')
 	const mainWindow = new BrowserWindow({
 		icon:   iconPath,
 		title:  'Rivine-UI',
