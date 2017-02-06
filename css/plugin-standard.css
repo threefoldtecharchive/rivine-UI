@@ -1,12 +1,12 @@
-/*  Style Guide: 
+/*  Style Guide:
  *    Transparent: 70% Opacity
- *    
+ *
  *    White:      #FFFFFF
  *    Grey-White: #F5F5F5
  *    Faint-Grey: #ECECEC
  *    Light-Grey: #DDDDDD
  *    Grey:       #C5C5C5
- *    Grey-Black: #4A4A4A
+ *    Grey-Black: #DEE8C4
  *    Black:      #000000
  *    Neon-Green: #00CBA0
  */
@@ -35,7 +35,7 @@ select, input {
 	position: relative;
 
 	box-shadow: none;
-	color:#4a4a4a;
+	color:#DEE8C4;
 
 	border: solid 1px #dddddd;
 	transition: box-shadow 0.3s, border 0.3s;
@@ -47,7 +47,7 @@ select {
 }
 select:focus, input:focus {
 	outline: none;
-	border: solid 1px #4a4a4a;
+	border: solid 1px #DEE8C4;
 	box-shadow: 0 0 5px 1px #c5c5c5;
 }
 select:hover {
@@ -62,16 +62,17 @@ select:hover {
 .header {
 	padding-top: 10px;
 	padding-left: 20px;
-	background-color: #4a4a4a;
-	background: linear-gradient(to top, #5A5A5A 15%, #4A4A4A 85%);
-	color: #fff;
+	background-color: #7EB51C;
+	font-weight: bold;
+	font-variant: small-caps;
+	color: white;
 	height: 50px;
 	vertical-align: top;
 }
 .header .title {
 	display: inline-block;
-	font-size: 30px;
-	color: #fff;
+	font-size: 26px;
+	color: #black;
 }
 .header .capsule {
 	white-space: nowrap;
@@ -121,6 +122,6 @@ select:hover {
 	-webkit-user-select: none;
 }
 .button:hover {
-	color: #4a4a4a;
+	color: #DEE8C4;
 	cursor: pointer;
 }

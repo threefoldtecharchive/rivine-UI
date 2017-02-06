@@ -6,7 +6,7 @@
  *	Faint-Grey: #ECECEC
  *	Light-Grey: #DDDDDD
  *	Grey:	   #C5C5C5
- *	Grey-Black: #4A4A4A
+ *	Grey-Black: #DEE8C4
  *	Black:	  #000000
  *	Neon-Green: #00CBA0
  */
@@ -68,7 +68,7 @@
 footer {
 	position: absolute;
 	bottom: 0px;
-	background-color: #61abff;
+	background-color: #7EB51C;
 	width: 100%;
 }
 
@@ -100,7 +100,7 @@ footer {
 	position: absolute;
 	top: 0px;
 	right: 25px;
-	background-color: #61abff;
+	background-color: #7EB51C;
 	color: #FFF;
 	cursor: pointer;
 	font-size: 1.4em;
@@ -135,6 +135,7 @@ input {
 	font-size: 1.2em;
 	padding: .1em;
 	width: 100%;
+	color : black;
 }
 
 #command-input {

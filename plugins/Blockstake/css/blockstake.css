@@ -6,21 +6,44 @@
  *		Faint-Grey: #ECECEC
  *		Light-Grey: #DDDDDD
  *		Grey:       #C5C5C5
- * 		Grey-Black: #4A4A4A
+ * 		Grey-Black: #DEE8C4
  * 		Black:      #000000
  */
-.blockstakes {
-	color: #c5c5c5;
-	margin: 20px 20px;
-	padding-left: 10px;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #e0e0e0;
+ .blockstakes {
+	margin-top: 50px;
+	margin-bottom: 50px;
+ 	color: black;
+ 	padding-left: 10px;
+ 	padding-bottom: 10px;
+ }
+
+.blockstakeInfo{
+		position:absolute;
+    left:10%;
+		width:1300px;
+		margin-left: 0 auto;
+		margin-right: 0 auto;
+		border-top: 1px solid black;
+		border-left: 1px solid black;
+		border-bottom: 1px solid black;
+		border-right: 1px solid black;
+		padding-top: 60px;
+		padding-bottom: 25px;
 }
-.blockstakes .amount {
-	display: inline-block;
-	color: #4a4a4a;
+
+.blockstakeInfo th, td{
+	padding: 15px;
+
 }
-.blockstakes .difficulty {
-	display: inline-block;
-	color: #4a4a4a;
+
+th{
+	background-color:#587181;
+	color: white;
+	font-variant: small-caps;
+	text-align: center;
+}
+
+td{
+	background-color:#dde3e8;
+	text-align: center;
 }

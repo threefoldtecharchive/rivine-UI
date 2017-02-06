@@ -6,9 +6,9 @@
  *    Faint-Grey: #ECECEC
  *    Light-Grey: #DDDDDD
  *    Grey:       #C5C5C5
- *    Grey-Black: #4A4A4A
+ *    Grey-Black: #DEE8C4
  *    Black:      #000000
- *    Neon-Green: #61ABFF
+ *    Neon-Green: #7EB51C
  */
  .app {
  	position: absolute;
@@ -49,7 +49,7 @@
 	margin-bottom: 8px;
 }
 .password-prompt i {
-	color: #61ABFF;
+	color: #7EB51C;
 }
 .password-prompt {
 	display: flex;
@@ -78,7 +78,9 @@
 	text-align: center;
 }
 .transaction-list h2 {
-	background-color: #C5C5C5;
+	background-color: #36454f;
+  color: white;
+  font-weight: bold;
 	margin: 0;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -87,7 +89,7 @@
 	color: #DC0025;
 }
 .confirmed-icon {
-	color: #61ABFF;
+	color: #7EB51C;
 }
 .wallet-address {
 	display: block;
@@ -110,7 +112,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: #dddddd;
+	background-color: #7EB51C;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	min-height: 60px;
@@ -118,7 +120,7 @@
 .balance-info {
 	padding-left: 10px;
 	padding-right: 10px;
-	color: black;
+	color: white;
 }
 .balance-info span {
 	display: block;
@@ -181,10 +183,10 @@
 	margin-top: 2px;
 	margin-bottom: 2px;
 	font-size: 12px;
-	color: #black;
+	color: white;
 }
 .send-button i, .receive-button i, .lock-button i {
-	color: #61ABFF;
+	color: white;
 }
 .newwallet-dialog {
 	position: absolute;
@@ -225,7 +227,7 @@
 	color: #000000;
 }
 .new-wallet-button i {
-	color: #61ABFF;
+	color: #7EB51C;
 }
 .new-wallet-button i:hover {
 	color: #00A785;
