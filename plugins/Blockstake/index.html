@@ -8,85 +8,32 @@
 		<link rel='stylesheet' href='../../css/pure-min.css'>
 		<link rel="stylesheet" href="../../css/plugin-standard.css">
 		<link rel="stylesheet" href="css/blockstake.css">
+
 	</head>
 	<body>
 		<div class="header">
 			<div class="title">blockstakes</div>
 		</div>
 
-		<div class="blockstakes">
-
-				<table class="blockstakeInfo">
-
-					<tr>
-						<th>amount of blockstakes</th>
-					</tr>
-						<tr id="amount">
-							<td id="amount">test</td>
-						</tr>
-
-					<tr>
-						<th>state of blockstake</th>
-					</tr>
-						<tr id="blockstate">
-							<td id="blockstate">test</td>
-						</tr>
-
-					<tr>
-						<th>number of blockstakes</th>
-					</tr>
-						<tr id="blocknum">
-							<td id="blocknum">test</td>
-						</tr>
-
-					<tr>
-						<th>age of blockstakes</th>
-					</tr>
-						<tr id="blockage">
-							<td id="blockage">test</td>
-						</tr>
-
-					<tr>
-						<th>blockstake block creation</th>
-					</tr>
-						<tr id="blockstakeBlockCreation">
-							<td id="blockstakeBlockCreation">test</td>
-						</tr>
-						<tr>
-							<td id="blockstakeBlockCreation">test</td>
-						</tr>
-
-					<tr>
-						<th>blockstake fees</th>
-					</tr>
-						<tr id="blockfee">
-							<td id="blockfee">test</td>
-						</tr>
-
-					<tr>
-						<th>blockstake block creation last week</th>
-					</tr>
-						<tr id="blockstakeBlockCreationLw">
-							<td id="blockstakeBlockCreationLw">test</td>
-						</tr>
-
-					<tr>
-						<th>blockstake block creation last week theoretically</th>
-					</tr>
-						<tr id="blockstakeBlockCreationT">
-							<td id="blockstakeBlockCreationT">test</td>
-						</tr>
-
-				</table>
-
-
-
+		<div class="infoTab">
+			<span>total active blockstakes: </span> <span id="amount"></span>
 		</div>
 
-
-
+		<h2>Blockstake overview</h2>
+		<table class="utxoTable" id="table">
+			<tr>
+				<th>state</th>
+				<th>blockstake num. of</th>
+				<th>blockstake age</th>
+				<th>blockstake block creation</th>
+				<th>blockstake fee</th>
+				<th>blockstake block creation LW</th>
+				<th>blockstake block creation T</th>
+			</tr>
+		</table>
 
 		<!-- JS -->
-		<script src="js/blockstake.js"></script>
+		<script src="js/main.js"></script>
+		<script src="../../bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>
