@@ -8,29 +8,32 @@
 		<link rel='stylesheet' href='../../css/pure-min.css'>
 		<link rel="stylesheet" href="../../css/plugin-standard.css">
 		<link rel="stylesheet" href="css/blockstake.css">
+
 	</head>
 	<body>
-		<!-- Frame -->
-		<div class="frame">
-			<!-- Header -->
-			<div class="header">
-				<div class="title">Blockstakes</div>
-			</div>
-
-			<div class="blockstakes">
-				<h2>My Stakes</h2>
-				<span>My amount of blockstakes </span>
-				<div class="amount">
-						<span id="amount"></span>
-				</div>
-				<br>
-				<span>Difficulty </span>
-				<div class="difficulty">
-						<span id="difficulty"></span>
-				</div>
-			</div>
+		<div class="header">
+			<div class="title">blockstakes</div>
 		</div>
+
+		<div class="infoTab">
+			<span>total active blockstakes: </span> <span id="amount"></span>
+		</div>
+
+		<h2>Blockstake overview</h2>
+		<table class="utxoTable" id="table">
+			<tr>
+				<th>state</th>
+				<th>blockstake num. of</th>
+				<th>blockstake age</th>
+				<th>blockstake block creation</th>
+				<th>blockstake fee</th>
+				<th>blockstake block creation LW</th>
+				<th>blockstake block creation T</th>
+			</tr>
+		</table>
+
 		<!-- JS -->
-		<script src="js/blockstake.js"></script>
+		<script src="js/main.js"></script>
+		<script src="../../bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>

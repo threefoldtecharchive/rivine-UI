@@ -6,21 +6,64 @@
  *		Faint-Grey: #ECECEC
  *		Light-Grey: #DDDDDD
  *		Grey:       #C5C5C5
- * 		Grey-Black: #4A4A4A
+ * 		Grey-Black: #DEE8C4
  * 		Black:      #000000
  */
-.blockstakes {
-	color: #c5c5c5;
-	margin: 20px 20px;
-	padding-left: 10px;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #e0e0e0;
+body{
+  margin: 0;
+  padding: 0;
 }
-.blockstakes .amount {
-	display: inline-block;
-	color: #4a4a4a;
+
+ .infoTab{
+   border-top: 1px solid #aebcc8;
+   padding-top: 5px;
+   padding-left: 5px;
+   padding-bottom: 5px;
+   background-color: #7EB51C;
+   width:100%;
+   margin: 0;
+ }
+
+ .infoTab span{
+   color: white;
+   font-variant: small-caps;
+ }
+
+  h2 {
+    text-align: center;
+ 	  background-color: #36454f;
+    color: white;
+    font-weight: bold;
+ 	  margin: 0;
+ 	  padding-top: 10px;
+ 	  padding-bottom: 10px;
+ }
+
+.utxoTable{
+    margin: 0;
+		width:100%;
+		padding-bottom: 25px;
 }
-.blockstakes .difficulty {
-	display: inline-block;
-	color: #4a4a4a;
+
+.utxoTable th, td{
+	padding: 15px;
+}
+
+th{
+  border-left: 1px #aebcc8 solid;
+  border-right: 1px #aebcc8 solid;
+	background-color:#dde3e8;
+  font-size: 14px;
+	text-align: center;
+}
+
+td{
+  border-top: 1px #aebcc8 solid;
+  border-bottom: 1px #aebcc8 solid;
+  border-left: 1px #aebcc8 solid;
+  border-right: 1px #aebcc8 solid;
+  font-size: 11px;
+  font-size: 14px;
+	text-align: center;
+  background-color: #e9edf0;
 }

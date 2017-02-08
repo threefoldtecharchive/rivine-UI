@@ -10,7 +10,7 @@
  * 		Black:      #000000
  */
 .about {
-	color: #c5c5c5;
+	color: black;
 	margin: 20px 20px;
 	padding-left: 10px;
 	padding-bottom: 10px;
@@ -18,5 +18,5 @@
 }
 .about .version {
 	display: inline-block;
-	color: #4a4a4a;
+	color: black;
 }

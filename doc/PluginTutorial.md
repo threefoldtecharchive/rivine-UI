@@ -138,7 +138,7 @@ The plugin-standard.css:
  *		Faint-Grey: #ECECEC
  *		Light-Grey: #DDDDDD
  *		Grey:       #C5C5C5
- * 		Grey-Black: #4A4A4A
+ * 		Grey-Black: #DEE8C4
  * 		Black:      #000000
  */
 /* Overall Effects */
@@ -168,7 +168,7 @@ html, body {
 .header {
 	padding-top: 10px;
 	padding-left: 20px;
-	background-color: #4a4a4a;
+	background-color: #DEE8C4;
 	color: #fff;
 	height: 50px;
 	vertical-align: top;
@@ -224,7 +224,7 @@ select, input {
 	padding-right: 4px;
 	padding-left: 6px;
 	box-shadow: none;
-	color:#4a4a4a;
+	color:#DEE8C4;
 
 	border: solid 1px #dddddd;
 	transition: box-shadow 0.3s, border 0.3s;
@@ -236,7 +236,7 @@ select {
 }
 select:focus, input:focus {
 	outline: none;
-	border: solid 1px #4a4a4a;
+	border: solid 1px #DEE8C4;
 	box-shadow: 0 0 5px 1px #c5c5c5;
 }
 select:hover {
@@ -264,7 +264,7 @@ The Overview-specific css:
  *		Faint-Grey: #ECECEC
  *		Light-Grey: #DDDDDD
  *		Grey:       #C5C5C5
- * 		Grey-Black: #4A4A4A
+ * 		Grey-Black: #DEE8C4
  * 		Black:      #000000
  */
 .frame {

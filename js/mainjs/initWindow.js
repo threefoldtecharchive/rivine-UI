@@ -15,7 +15,7 @@ const onBoundsChange = (mainWindow, config) => () => {
 // Creates the window and loads index.html
 export default function(config) {
 	// Create the browser
-	const iconPath = Path.join(__dirname, '../', 'assets', 'tray.png')
+	const iconPath = Path.join(__dirname, '../', 'assets', 'rivinechain.png')
 	const mainWindow = new BrowserWindow({
 		icon:   iconPath,
 		title:  'Rivine-UI',
@@ -24,7 +24,7 @@ export default function(config) {
 	// This should be used in the renderer to cancel close() events using window.onbeforeunload
 	mainWindow.closeToTray = config.closeToTray
 
-	mainWindow.tray = new Tray(Path.join(app.getAppPath(), 'assets', 'tray.png'))
+	mainWindow.tray = new Tray(Path.join(app.getAppPath(), 'assets', 'rivinechain.png'))
 	mainWindow.tray.setToolTip('Rivine - The Collaborative Cloud.')
 	mainWindow.tray.setContextMenu(appTray(mainWindow))
 

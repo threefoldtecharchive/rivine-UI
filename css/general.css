@@ -6,9 +6,9 @@
  *    Faint-Grey: #ECECEC
  *    Light-Grey: #DDDDDD
  *    Grey:       #C5C5C5
- *    Grey-Black: #4A4A4A
+ *    Grey-Black: #DEE8C4
  *    Black:      #000000
- *    Neon-Green: #61ABFF
+ *    Neon-Green: #7EB51C
  */
 /* Overall rules */
 .blueprint {
@@ -50,8 +50,7 @@ html,body {
 	height: 80px;
 	width: 100%;
 
-	background-color: white;
-	background: linear-gradient(to left, #749EFF 70%, white 85%);
+	background-color: #DEE8C4;
 }
 .logo {
 	padding-left: 20px;
@@ -77,7 +76,7 @@ html,body {
 	color: #E0000B;
 }
 .status-bar-synced {
-	color: #61ABFF;
+	color: #7EB51C;
 }
 .status-bar {
 	height: 100%;
@@ -88,7 +87,7 @@ html,body {
 	cursor: default;
 }
 .status-bar-blockheight {
-	color: #f5f5f5;
+	color: black;
 }
 
 /* Header Buttons */
@@ -100,7 +99,7 @@ html,body {
 	color: #AAAAAA;
 }
 .header-button:hover {
-	color: #61ABFF;
+	color: #7EB51C;
 	cursor: pointer;
 }
 
@@ -108,7 +107,7 @@ html,body {
 #sidebar {
 	position: relative;
 
-	background-color: #D5D3D5;
+	background-color: #DEE8C4;
 	width: 160px;
 	z-index: 5;
 	height: 100%;
@@ -132,7 +131,7 @@ html,body {
 }
 .button:hover {
 	cursor: pointer;
-	background-color: #C5C3C5;
+	background-color: #587181;
 	color: #F5F5F5;
 }
 .button:active {
@@ -141,7 +140,7 @@ html,body {
 .button.current {
 	transition: all .25s;
 	cursor: default;
-	background-color: #61ABFF;
+	background-color: #36454f;
 	color: #F5F5F5;
 }
 .button.current .icon, .button:hover .icon {
@@ -198,7 +197,7 @@ html,body {
 	font-size: 14px;
 	color: black;
 	border-radius: 2px;
-	background-color: 61ABFF;
+	background-color: 7EB51C;
 }
 #tooltip:after {
 	top: 100%;
@@ -210,7 +209,7 @@ html,body {
 	position: absolute;
 	pointer-events: none;
 	border-color: rgba(0, 0, 0, 0);
-	border-top-color: 61ABFF;
+	border-top-color: 7EB51C;
 	border-width: 8px;
 	margin-left: -8px;
 }
@@ -239,7 +238,7 @@ html,body {
 	line-height: 80px;
 	font-size: 48px;
 	text-align: center;
-	color: #61ABFF;
+	color: #7EB51C;
 	background-color: #f5f5f5;
 	border-right: 1px solid #eeeeee;
 }
@@ -280,7 +279,7 @@ html,body {
 }
 .centered {
 	opacity: 1;
-	color: #61ABFF;
+	color: #7EB51C;
 	margin: auto;
 }
 .centered p {
