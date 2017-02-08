@@ -4,7 +4,7 @@ import { app } from 'electron'
 
 // The default settings
 const defaultConfig = {
-	homePlugin:  'Overview',
+	homePlugin:  'Wallet',
 	rivined: {
 		path: Path.join(__dirname, '../Rivine/' + (process.platform === 'win32' ? 'rivined.exe' : 'rivined')),
 		datadir: Path.join(app.getPath('userData'), './rivine'),

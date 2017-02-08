@@ -25,8 +25,9 @@ body{
  }
 
  .infoTab span{
+   padding-left: 50px;
    color: white;
-   font-variant: small-caps;
+   font-weight: bold;
  }
 
   h2 {
@@ -53,7 +54,7 @@ th{
   border-left: 1px #aebcc8 solid;
   border-right: 1px #aebcc8 solid;
 	background-color:#dde3e8;
-  font-size: 14px;
+  font-size: 18px;
 	text-align: center;
 }
 
@@ -62,8 +63,8 @@ td{
   border-bottom: 1px #aebcc8 solid;
   border-left: 1px #aebcc8 solid;
   border-right: 1px #aebcc8 solid;
-  font-size: 11px;
-  font-size: 14px;
-	text-align: center;
+  font-size: 18px;
+	text-align: left;
+  padding-left: 10px;
   background-color: #e9edf0;
 }
