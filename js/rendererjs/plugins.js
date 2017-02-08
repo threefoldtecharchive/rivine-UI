@@ -130,6 +130,13 @@ export const getOrderedPlugins = (path, homePlugin) => {
 		return 0
 	})
 
+	plugins = plugins.sort((p1) => {
+		if (getPluginName(p1) === 'Block Creation') {
+			return 1
+		}
+		return 0
+	})
+
 	// Push the About plugin to the bottom
 	plugins = plugins.sort((p1) => {
 		if (getPluginName(p1) === 'About') {
