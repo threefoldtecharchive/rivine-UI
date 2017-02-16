@@ -1,5 +1,20 @@
 const electron = require('electron');
 
+// addCommasToNumber adds commas to a number at the thousands places.
+function addCommasToNumber(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// readableCoins converts a number of hastings into a more readable volume of
+// coins.
+function readableCoins(hastings) {
+	if (hastings < 1000000000000000000000000000000000) {
+		return addCommasToNumber((hastings / 1000000000000000000000000).toFixed(3)) + " coins";
+	} else {
+		return addCommasToNumber((hastings / 1000000000000000000000000000000000).toFixed(3)) + " billion coins";
+	}
+}
+
 //request to the deamon for statitistics of the blockstakes
 RivineAPI.call("/wallet/blockstakestats", (err,result) => {
   if(err){
@@ -10,14 +25,15 @@ RivineAPI.call("/wallet/blockstakestats", (err,result) => {
   //setting the total of the blockstakes in the header
   document.getElementById("amount").innerHTML = "Currently " + result.totalactiveblockstake + " blockstake active"
   //document.getElementById("totalBlockAge").innerHTML = "Total blockage: " + result.blockstakeage[result.blockstakestate.length -1]
-  document.getElementById("totalBlocksCreated").innerHTML = "Total blocks created: " + result.blockstakeblockcreation[result.blockstakestate.length -1]
-  document.getElementById("totalBlocksfee").innerHTML = "Total blockfee: " + result.blockstakefee[result.blockstakestate.length -1]
-  document.getElementById("totalBlockasActive").innerHTML = "Total blocks created this week: " + result.blockstakebclastweek[result.blockstakestate.length -1] + "/" + result.blockstakebclastweekt[result.blockstakestate.length -1];
+  document.getElementById("totalBlocksCreated").innerHTML = result.totalblockstake + " active by this account"
+  document.getElementById("totalBlocksfee").innerHTML = ""
+  document.getElementById("totalBlockasActive").innerHTML = "Total blocks created " + result.totalbclast1000 + " / " + result.blockcount +" ( " + result.totalbclast1000t + " theoretical ) with fee of " + readableCoins(result.totalfeelast1000);
+
 
   var table = document.getElementById("table");
 
   //loop for how many objects there are in the json object
-  for(var i = 0; i < result.blockstakestate.length -1; i++){
+  for(var i = 0; i < result.blockstakestate.length; i++){
       var row = table.insertRow(i+1);
 
       //create a cell for each value
@@ -30,7 +46,7 @@ RivineAPI.call("/wallet/blockstakestats", (err,result) => {
 
       //setting the cells value to what's in the json object
       cell2.innerHTML = result.blockstakenumof[i]
-      cell3.innerHTML = result.blockstakeage[i]
+      cell3.innerHTML = result.blockstakeutxoaddress[i]
 
       //cell4.innerHTML = result.blockstakeblockcreation[i]
       //cell5.innerHTML = result.blockstakefee[i]
