@@ -1,8 +1,8 @@
 {
   "name": "Rivine-UI",
-  "version": "v0.0.2",
+  "version": "v0.1.0",
   "main": "dist/main.js",
-  "author": "NebulousLabs",
+  "author": "Rivine",
   "description": "A UI application for interfacing with Rivine",
   "license": "MIT",
   "devDependencies": {
