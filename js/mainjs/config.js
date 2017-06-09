@@ -71,7 +71,12 @@ export default function configManager(filepath) {
 	config.defaultRivinedPath = defaultRivinedPath
 
 	// Save to disk immediately when loaded
-	config.save()
+	try {
+		config.save()
+	} catch (err) {
+		console.error("couldnt save config.json: " + err.toString())
+	}
+
 	// Return the config object with the above 3 member functions
 	return config
 }
