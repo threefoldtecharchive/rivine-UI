@@ -8,8 +8,8 @@ const defaultConfig = {
 	rivined: {
 		path: Path.join(__dirname, '../Rivine/' + (process.platform === 'win32' ? 'rivined.exe' : 'rivined')),
 		datadir: Path.join(app.getPath('userData'), './rivine'),
+		rpcaddr: ':23112',
 		detached: false,
-		//address: 'localhost:9980',
 		address: 'localhost:23110',
 	},
 	closeToTray: process.platform === 'win32' || process.platform === 'darwin' ? true : false,
@@ -27,12 +27,14 @@ export default function configManager(filepath) {
 	let config
 
 	try {
-		// TODO: write load() function instead of global require
 		const data = fs.readFileSync(filepath)
 		config = JSON.parse(data)
 	} catch (err) {
 		config = defaultConfig
 	}
+
+	// fill out default values if config is incomplete
+	config = Object.assign(defaultConfig, config)
 
 	/**
 	 * Gets or sets a config attribute

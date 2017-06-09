@@ -94,6 +94,8 @@ export default async function loadingScreen(initUI) {
 	try {
 		const rivinedProcess = Rivined.launch(rivinedConfig.path, {
 			'rivine-directory': rivinedConfig.datadir,
+			'rpc-addr': rivinedConfig.rpcaddr,
+			'api-addr': rivinedConfig.apiaddress,
 		})
 		rivinedProcess.on('error', (e) => showError('Rivined couldnt start: ' + e.toString()))
 		rivinedProcess.on('close', () => showError('Rivined unexpectedly closed.'))
