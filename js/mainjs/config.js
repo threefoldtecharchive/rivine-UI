@@ -11,7 +11,7 @@ const defaultConfig = {
 		datadir: Path.join(app.getPath('userData'), './rivine'),
 		rpcaddr: ':23112',
 		detached: false,
-		address: 'localhost:23110',
+		address: '127.0.0.1:23110',
 	},
 	closeToTray: process.platform === 'win32' || process.platform === 'darwin' ? true : false,
 	width:	   1024,
