@@ -73,9 +73,15 @@ export default async function loadingScreen(initUI) {
 		return
 	}
 
-	// Check rivinedConfig.path, and ask for a new path if rivined doesn't exist.
-	const exists = await checkRivinePath(rivinedConfig.path)
-	if (!exists) {
+	// check rivinedConfig.path, if it doesn't exist optimistically set it to the
+	// default path
+	if (!await checkRivinePath(rivinedConfig.path)) {
+		rivinedConfig.path = config.defaultRivinedPath
+	}
+
+	// check rivinedConfig.path, and ask for a new path if siad doesn't exist.
+	if (!await checkRivinePath(rivinedConfig.path)) {
+
 		// config.path doesn't exist.  Prompt the user for rivined's location
 		dialog.showErrorBox('Rivined not found', 'Rivine-UI couldn\'t locate rivined.  Please navigate to rivined.')
 		const rivinedPath = dialog.showOpenDialog({

@@ -2,11 +2,12 @@ import fs from 'graceful-fs'
 import Path from 'path'
 import { app } from 'electron'
 
+const defaultRivinedPath = Path.join(__dirname, '../Rivine/' + (process.platform === 'win32' ? 'rivined.exe' : 'rivined'))
 // The default settings
 const defaultConfig = {
 	homePlugin:  'Wallet',
 	rivined: {
-		path: Path.join(__dirname, '../Rivine/' + (process.platform === 'win32' ? 'rivined.exe' : 'rivined')),
+		path: defaultRivinedPath,
 		datadir: Path.join(app.getPath('userData'), './rivine'),
 		rpcaddr: ':23112',
 		detached: false,
@@ -65,6 +66,9 @@ export default function configManager(filepath) {
 	config.reset = function() {
 		config = configManager(filepath)
 	}
+
+	// expose the default rivined path
+	config.defaultRivinedPath = defaultRivinedPath
 
 	// Save to disk immediately when loaded
 	config.save()
