@@ -68,7 +68,7 @@ buildOSX() {
 		wget $rivineOSX
 		unzip ./rivine-*
 		rm ./rivine*.zip
-		mv ./rivine-* ./Sia
+		mv ./rivine-* ./rivine
 	)
 	package "../../" "Rivine-UI.app/Contents/Resources/app"
 	rm -r electron*.zip
