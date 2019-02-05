@@ -34,3 +34,9 @@ Or if you're the type to jump right into code, just search through the project
 (sans the `node_modules` folder) for the term `TODO:`. If you're on a UNIX
 (Linux & OSX) system, run `grep -r 'TODO:' js plugins` in a terminal at the
 root level of the project
+
+## Repository Owners
+
+* Rob Van Mieghem ([@robvanmieghem](https://github.com/robvanmieghem))
+* Lee Smet ([@leesmet](https://github.com/leesmet))
+* Glen De Cauwsemaecker ([@glendc](https://github.com/glendc))
